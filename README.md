@@ -21,6 +21,7 @@ It works with **any weather entity**, anywhere in the world.
 - **Dressed for the next hours, not for this minute**: the coldest of the next three hours decides, by what the air feels like, with wind chill and humid heat.
 - **Rain, snow, wind and sun**: umbrella and rubber boots, a hood instead of the umbrella when it is windy or thundering, snow trousers and goggles, scarf, gloves, sun hat and sunglasses.
 - **Advice in words**: "Milder later, up to 16°", "Rain from about 14:00", "Watch out for ice".
+- **Two styles**: friendly, or a street comic with thick outlines and hard shadows.
 - **You choose the person**: four ages from child to senior, three genders, nine skin tones, twelve hairstyles, twelve hair colours, beards, glasses, freckles, earrings, cap, headscarf or turban, trousers or skirt, and the colours of the clothes.
 - **One card per person**: put several side by side for a family. Someone who feels the cold gets a warmer outfit and their own advice.
 - **A moving scene**: sun, stars, clouds, fog, rain, thunderstorm, snow and wind; still for anyone who turned animations off.
@@ -29,6 +30,8 @@ It works with **any weather entity**, anywhere in the world.
 - **Set up in the editor**: no YAML needed; English, German, French and Italian, °C and °F.
 
 ![The weather of a year](docs/weather.png)
+
+![The same in the street comic style](docs/comic.png)
 
 ## Installation
 
@@ -58,6 +61,7 @@ color: pink
 | Option | Default | Values |
 |---|---|---|
 | `entity` | | a weather entity (required) |
+| `style` | `friendly` | `friendly`, `comic` |
 | `name` | | shown on the card |
 | `gender` | `neutral` | `female`, `male`, `neutral` |
 | `age` | `adult` | `child`, `teen`, `adult`, `senior` |

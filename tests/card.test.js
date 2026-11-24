@@ -106,6 +106,30 @@ test("rain with wind always means a hood", () => {
   assert.equal(c.outfit(c.recommend([h("pouring", 12, { wind_speed: 50 })]), { headwear: "headscarf" }).hood, "down");
 });
 
+test("everything can be drawn as a comic", () => {
+  const bad = /undefined|NaN|null|<b>|Infinity/;
+  const conditions = ["sunny", "clear-night", "partlycloudy", "cloudy", "fog", "rainy", "pouring", "lightning-rainy", "snowy", "windy", "new"];
+  for (const condition of conditions)
+    for (const t of [-15, -4, 4, 9, 15, 21, 33])
+      for (const wind_speed of [5, 50]) {
+        const o = c.recommend([h(condition, t, { wind_speed })]);
+        for (const night of [true, false]) {
+          const s = c.comicScene(c.sceneOf(condition, night), o);
+          assert.ok(!bad.test(s.back + s.front), condition);
+        }
+        for (const age of [...c.AGES, "x"])
+          for (const gender of c.GENDERS)
+            for (const hair of [...c.HAIR_STYLES, "x"])
+              for (const headwear of c.HEADWEAR) {
+                const svg = c.comicFigure(c.outfit(o, { age, gender, hair, headwear, skin: "<b>", color: "none", bottom: gender === "female" ? "skirt" : "trousers" }));
+                assert.ok(!bad.test(svg), `${condition} ${t} ${age} ${hair}`);
+                assert.equal((svg.match(/<g[ >]/g) || []).length, (svg.match(/<\/g>/g) || []).length);
+              }
+      }
+  const o = c.outfit(c.recommend([h("cloudy", 18)]), { beard: "full", glasses: true, freckles: true, earrings: true });
+  assert.equal(c.comicFigure(o), c.comicFigure(o)); // the same picture, so the card does not redraw
+});
+
 test("choices", () => {
   const warm = c.recommend([h("cloudy", 24)]), cold = c.recommend([h("cloudy", -5)]);
   assert.equal(c.outfit(warm, { bottom: "skirt" }).legs, "skirt");
@@ -116,7 +140,7 @@ test("choices", () => {
 });
 
 test("every choice has a name in every language", () => {
-  for (const key of [...c.AGES, ...c.BEARDS, ...c.GENDERS, ...c.HAIR_STYLES, ...c.HEADWEAR, ...Object.keys(c.SKIN), ...Object.keys(c.HAIR), ...Object.keys(c.EYES), ...Object.keys(c.COLORS)]) assert.ok(c.TEXT.en[key], key);
+  for (const key of [...c.AGES, ...c.STYLES, ...c.BEARDS, ...c.GENDERS, ...c.HAIR_STYLES, ...c.HEADWEAR, ...Object.keys(c.SKIN), ...Object.keys(c.HAIR), ...Object.keys(c.EYES), ...Object.keys(c.COLORS)]) assert.ok(c.TEXT.en[key], key);
 });
 
 test("all languages have the same texts", () => {
