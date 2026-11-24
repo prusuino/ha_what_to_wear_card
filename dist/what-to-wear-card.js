@@ -27,7 +27,7 @@
  *   show_weather: true
  *   show_tips: true
  */
-const VERSION = "0.2.1";
+const VERSION = "0.2.2";
 
 const SKIN = { porcelain: "#FBE4D5", fair: "#F6D0B3", light: "#EEBD97", medium: "#DDA577", olive: "#C8935F", tan: "#AE7748", brown: "#8B5834", deep: "#67401F", ebony: "#482A1A" };
 const HAIR = { black: "#26201E", dark_brown: "#4A2E1F", brown: "#7A4B2A", light_brown: "#A5744A", blond: "#D9A94E", platinum: "#EBDDB8", red: "#B5522B", auburn: "#7E3022", grey: "#9AA0A6", white: "#E9ECEE", blue: "#3F78C9", pink: "#E07AA8" };
@@ -180,7 +180,7 @@ const dot = (x, y, r, c) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${c}"/>`
 
 // Drawn as a child (big head); older people get a longer body and a smaller head.
 // [width, height, head, neck]
-const BUILD = { child: [1, 1, 1, 5], teen: [1.02, 1.14, 0.9, 7], adult: [1.06, 1.28, 0.84, 8], senior: [1.06, 1.23, 0.84, 7] };
+const BUILD = { child: [1, 1, 1, 2], teen: [1.02, 1.14, 0.9, 2.5], adult: [1.06, 1.28, 0.84, 3], senior: [1.06, 1.23, 0.84, 2.5] };
 
 // Hair behind the head and body.
 function hairBack(o) {
