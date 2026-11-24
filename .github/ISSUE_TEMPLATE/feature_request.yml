@@ -1,0 +1,10 @@
+name: Feature request
+description: An idea or something that is missing
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: What would you like the card to do?
+    validations:
+      required: true

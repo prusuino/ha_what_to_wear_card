@@ -1,0 +1,39 @@
+name: Bug report
+description: Something does not work as described
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you did, what you saw, and what you expected instead. A screenshot helps.
+    validations:
+      required: true
+  - type: textarea
+    id: config
+    attributes:
+      label: Configuration of the card
+      description: Edit the card → Show code editor.
+      render: yaml
+    validations:
+      required: true
+  - type: textarea
+    id: weather
+    attributes:
+      label: State of the weather entity
+      description: Developer tools → States. Remove your location if the name contains it.
+      render: yaml
+  - type: input
+    id: version
+    attributes:
+      label: Version of the card
+      placeholder: "1.0.0"
+    validations:
+      required: true
+  - type: input
+    id: ha
+    attributes:
+      label: Home Assistant version and browser
+      placeholder: "2026.11.3, Firefox"
+    validations:
+      required: true

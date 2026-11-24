@@ -98,6 +98,14 @@ test("bitter cold, snow and thunderstorms look different", () => {
   for (const level of ["hot", "warm", "mild", "cool", "cold", "frost", "arctic"]) for (const tx of Object.values(c.TEXT)) assert.ok(tx[level] && tx[`s_${level}`]);
 });
 
+test("rain with wind always means a hood", () => {
+  for (const t of [2, 6, 12, 23, 28]) {
+    const o = c.recommend([h("pouring", t, { wind_speed: 50 })]), d = c.outfit(o, {});
+    assert.ok(!d.umbrella && d.hood === "up" && d.hat === null, String(t));
+  }
+  assert.equal(c.outfit(c.recommend([h("pouring", 12, { wind_speed: 50 })]), { headwear: "headscarf" }).hood, "down");
+});
+
 test("choices", () => {
   const warm = c.recommend([h("cloudy", 24)]), cold = c.recommend([h("cloudy", -5)]);
   assert.equal(c.outfit(warm, { bottom: "skirt" }).legs, "skirt");

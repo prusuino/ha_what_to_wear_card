@@ -1,0 +1,30 @@
+name: Release asset
+
+# Attaches the card to every published release. The Marketplace downloads
+# this file, and GitHub counts the downloads.
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  card:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: The version in the card is the version of the release
+        run: grep -q "const VERSION = \"${TAG#v}\"" dist/what-to-wear-card.js
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+
+      - name: Upload to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.release.tag_name }}
+        run: gh release upload "$TAG" dist/what-to-wear-card.js --clobber

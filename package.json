@@ -1,1 +1,1 @@
-{ "name": "what-to-wear-card", "private": true, "type": "module", "scripts": { "test": "node --test tests/" } }
+{ "name": "what-to-wear-card", "private": true, "type": "module", "scripts": { "test": "node --test tests/card.test.js" } }
