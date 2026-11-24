@@ -73,14 +73,32 @@ test("sun, storm, no data", () => {
 
 test("everything can be drawn", () => {
   const conditions = ["sunny", "clear-night", "partlycloudy", "cloudy", "fog", "rainy", "pouring", "hail", "lightning", "lightning-rainy", "snowy", "snowy-rainy", "windy", "windy-variant", "exceptional", "new"];
+  const bad = /undefined|NaN|null|<b>|Infinity/;
   for (const condition of conditions)
-    for (const t of [-15, 0, 4, 9, 15, 21, 33])
-      for (const hair of [...c.HAIR_STYLES, "unknown"])
-        for (const night of [true, false]) {
-          const o = c.recommend([h(condition, t, { wind_speed: t < 0 ? 50 : 5 })]);
-          const svg = c.figure(c.outfit(o, { hair, hair_color: "x", skin: "<b>", color: "none" })) + c.scene(c.sceneOf(condition, night), o).back;
-          assert.ok(!/undefined|NaN|null|<b>/.test(svg), `${condition} ${t} ${hair}`);
-        }
+    for (const t of [-15, 0, 4, 9, 15, 21, 33]) {
+      const o = c.recommend([h(condition, t, { wind_speed: t < 0 ? 50 : 5 })]);
+      for (const night of [true, false]) assert.ok(!bad.test(c.scene(c.sceneOf(condition, night), o).back));
+      for (const age of [...c.AGES, "x"])
+        for (const gender of c.GENDERS)
+          for (const hair of [...c.HAIR_STYLES, "x"])
+            for (const headwear of c.HEADWEAR) assert.ok(!bad.test(c.figure(c.outfit(o, { age, gender, hair, headwear, skin: "<b>", color: "none", bottom: gender === "female" ? "skirt" : "trousers" }))), `${condition} ${t} ${age} ${hair}`);
+    }
+  const o = c.recommend([h("cloudy", 18)]);
+  for (const beard of c.BEARDS) for (const skin of Object.keys(c.SKIN)) assert.ok(!bad.test(c.figure(c.outfit(o, { beard, skin, glasses: true, freckles: true, earrings: true }))));
+  for (const map of [c.SKIN, c.HAIR, c.EYES, c.COLORS]) for (const v of Object.values(map)) assert.match(v, /^#[0-9A-F]{6}$/);
+});
+
+test("choices", () => {
+  const warm = c.recommend([h("cloudy", 24)]), cold = c.recommend([h("cloudy", -5)]);
+  assert.equal(c.outfit(warm, { bottom: "skirt" }).legs, "skirt");
+  assert.equal(c.outfit(cold, { bottom: "skirt" }).legs, "trousers");
+  assert.equal(c.outfit(warm, { age: "child", beard: "full" }).beard, null);
+  assert.equal(c.outfit(cold, { headwear: "turban" }).hat, null);
+  assert.equal(c.outfit(cold, {}).hat, "beanie");
+});
+
+test("every choice has a name in every language", () => {
+  for (const key of [...c.AGES, ...c.BEARDS, ...c.GENDERS, ...c.HAIR_STYLES, ...c.HEADWEAR, ...Object.keys(c.SKIN), ...Object.keys(c.HAIR), ...Object.keys(c.EYES), ...Object.keys(c.COLORS)]) assert.ok(c.TEXT.en[key], key);
 });
 
 test("all languages have the same texts", () => {
