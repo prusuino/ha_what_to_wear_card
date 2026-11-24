@@ -348,7 +348,7 @@ const STYLE = `
 ha-card { display: block; position: relative; overflow: hidden; height: 100%; min-height: 220px; container-type: inline-size; isolation: isolate; }
 .back, .front { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
 .front { z-index: 3; pointer-events: none; }
-.in { position: relative; display: grid; grid-template-columns: minmax(150px, 38%) 1fr; height: 100%; min-height: 220px; box-sizing: border-box; padding: 14px; gap: 8px; cursor: pointer; }
+.in { position: relative; display: grid; grid-template-rows: minmax(0, 1fr); grid-template-columns: minmax(150px, 38%) 1fr; height: 100%; min-height: 220px; box-sizing: border-box; padding: 14px; gap: 8px; cursor: pointer; }
 .info { display: flex; flex-direction: column; justify-content: space-between; gap: 10px; min-width: 0; position: relative; z-index: 4; }
 .w, .tips { background: rgba(18, 28, 40, .5); color: #fff; border-radius: 14px; padding: 10px 12px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
 .w { align-self: flex-start; max-width: 100%; box-sizing: border-box; }
@@ -360,15 +360,16 @@ ha-card { display: block; position: relative; overflow: hidden; height: 100%; mi
 .p { flex: 0 1 260px; min-width: 0; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; }
 .p svg { width: 100%; max-height: 100%; min-height: 0; flex: 0 1 auto; overflow: visible; display: block; }
 .p.child svg { width: 80%; max-height: 82%; }
-.n { background: rgba(18, 28, 40, .5); color: #fff; border-radius: 10px; padding: 1px 10px; font-size: 13px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; box-sizing: border-box; }
+.n { flex: none; background: rgba(18, 28, 40, .5); color: #fff; border-radius: 10px; padding: 1px 10px; font-size: 13px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; box-sizing: border-box; }
 .msg { padding: 24px 16px; color: var(--secondary-text-color); }
-@container (max-width: 430px) {
-  .in { grid-template-columns: 1fr; grid-template-rows: auto minmax(190px, 1fr) auto; }
-  .info { display: contents; }
-  .w { position: relative; z-index: 4; grid-row: 1; display: flex; align-items: center; gap: 12px; }
-  .tips { position: relative; z-index: 4; }
-  .people { grid-row: 2; }
-  .tips { grid-row: 3; }
+@container (max-width: 480px) {
+  .in { grid-template-columns: 46% 1fr; padding: 10px; }
+  .t { font-size: 30px; } .s, .tips { font-size: 13px; } .tips b { font-size: 15px; }
+  .in.many { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr) auto; }
+  .many .info { display: contents; }
+  .many .w { position: relative; z-index: 4; grid-row: 1; display: flex; align-items: center; gap: 12px; padding: 6px 12px; }
+  .many .people { grid-row: 2; }
+  .many .tips { position: relative; z-index: 4; grid-row: 3; padding: 6px 12px; }
 }
 @container (min-width: 760px) {
   .t { font-size: 48px; } .s, .tips { font-size: 17px; } .tips b { font-size: 20px; } .n { font-size: 16px; }
@@ -543,7 +544,7 @@ class WhatToWearCard extends HTMLElement {
     const tips = persons[0].o.tips.map((x, i) => (i ? `<div>${tip(x)}</div>` : `<b>${tip(x)}</b>`)).join("");
     const label = persons[0].o.tips.map(tip).join(". ");
     this._paint(
-      `${s.back}<div class="in"><div class="info"><div class="w"><div class="t">${deg(h.temperature)}</div><div><div class="s">${esc(condition)}</div>${feels}<div class="s">${esc(details.join(" · "))}</div></div></div><div class="tips">${tips}</div></div><div class="people">${persons
+      `${s.back}<div class="in${persons.length > 2 ? " many" : ""}"><div class="info"><div class="w"><div class="t">${deg(h.temperature)}</div><div><div class="s">${esc(condition)}</div>${feels}<div class="s">${esc(details.join(" · "))}</div></div></div><div class="tips">${tips}</div></div><div class="people">${persons
         .map(({ p, o }) => `<div class="p ${p.size === "adult" ? "adult" : "child"}"><svg viewBox="14 -30 196 320" role="img" aria-label="${esc(p.name)} ${label}">${figure(outfit(o, p))}</svg>${p.name ? `<div class="n">${esc(p.name)}</div>` : ""}</div>`)
         .join("")}</div></div>${s.front}`
     );
