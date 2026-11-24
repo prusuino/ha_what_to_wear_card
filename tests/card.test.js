@@ -88,6 +88,16 @@ test("everything can be drawn", () => {
   for (const map of [c.SKIN, c.HAIR, c.EYES, c.COLORS]) for (const v of Object.values(map)) assert.match(v, /^#[0-9A-F]{6}$/);
 });
 
+test("bitter cold, snow and thunderstorms look different", () => {
+  const arctic = c.recommend([h("sunny", -14)]), storm = c.recommend([h("lightning-rainy", 24)]), snow = c.recommend([h("snowy", -2)]);
+  assert.equal(arctic.level, "arctic");
+  assert.ok(c.outfit(arctic, {}).veil && c.outfit(arctic, {}).fur);
+  assert.ok(!storm.umbrella && storm.hood && storm.top === "rain" && !keys(storm).includes("umbrella"));
+  assert.ok(c.outfit(snow, {}).goggles);
+  assert.ok(c.recommend([h("cloudy", 13)], -4).scarf && !c.recommend([h("cloudy", 13)]).scarf);
+  for (const level of ["hot", "warm", "mild", "cool", "cold", "frost", "arctic"]) for (const tx of Object.values(c.TEXT)) assert.ok(tx[level] && tx[`s_${level}`]);
+});
+
 test("choices", () => {
   const warm = c.recommend([h("cloudy", 24)]), cold = c.recommend([h("cloudy", -5)]);
   assert.equal(c.outfit(warm, { bottom: "skirt" }).legs, "skirt");
