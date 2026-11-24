@@ -6,7 +6,7 @@
  *
  *   type: custom:what-to-wear-card
  *   entity: weather.home
- *   style: friendly            # friendly | comic; everything below is optional
+ *   style: friendly            # friendly | comic | pictogram | symbols; everything below is optional
  *   name: Mia
  *   gender: female             # female | male | neutral
  *   age: child                 # child | teen | adult | senior
@@ -47,7 +47,7 @@ const AGES = ["child", "teen", "adult", "senior"];
 const HAIR_STYLES = ["short", "buzz", "curly", "afro", "bob", "long", "ponytail", "pigtails", "braids", "bun", "receding", "bald"];
 const BEARDS = ["none", "stubble", "moustache", "goatee", "full"];
 const HEADWEAR = ["none", "cap", "headscarf", "turban"];
-const STYLES = ["friendly", "comic"];
+const STYLES = ["friendly", "comic", "pictogram", "symbols"];
 const DEFAULTS = {
   style: "friendly", name: "", gender: "neutral", age: "adult", skin: "medium", hair: "short", hair_color: "brown", eyes: "brown", beard: "none", headwear: "none",
   glasses: false, freckles: false, earrings: false, color: "teal", bottom: "trousers", bottom_color: "navy", accent_color: "yellow",
@@ -56,16 +56,16 @@ const DEFAULTS = {
 
 const TEXT = {
   en: {
-    no_entity: "Choose a weather entity", missing: "Weather entity not found", unavailable: "No weather data right now", feels: "feels like", hot: "Light clothes", warm: "T-shirt weather", mild: "A sweater is enough", cool: "Put on a light jacket", cold: "Put on a warm jacket", frost: "Wrap up warm", umbrella: "Take an umbrella", raincoat: "Rain jacket instead of an umbrella, it is windy", snow: "Snow: boots and gloves", storm: "Thunderstorm: better stay inside", sun: "Sun hat and sunscreen", milder: "Milder later, up to {t}", colder: "Colder later, down to {t}: take a jacket", rain_later: "Rain from about {h}", ice: "Watch out for ice", s_hot: "Light clothes", s_warm: "T-shirt", s_mild: "Sweater", s_cool: "Light jacket", s_cold: "Warm jacket", s_frost: "Wrap up warm", s_umbrella: "Umbrella", s_raincoat: "Rain jacket", s_snow: "Snow gear", s_storm: "Stay inside", arctic: "Bitter cold: cover your face", s_arctic: "Bitter cold", s_rain_later: "Rain later", f_style: "Style", friendly: "Friendly", comic: "Street comic", f_entity: "Weather", f_name: "Name", f_person: "Person", f_hairgroup: "Hair", f_look: "Face and headwear", f_clothes: "Clothes", f_display: "Display", f_gender: "Gender", f_age: "Age", f_skin: "Skin", f_hair: "Hairstyle", f_hair_color: "Hair colour", f_eyes: "Eye colour", f_beard: "Beard", f_headwear: "Headwear", f_glasses: "Glasses", f_freckles: "Freckles", f_earrings: "Earrings", f_color: "Top", f_bottom: "Trousers or skirt", f_bottom_color: "Trousers or skirt colour", f_accent_color: "Hat, scarf, umbrella, shoes", f_sense: "Feels the cold (−) or rarely (+)", f_hours: "Hours ahead", f_show_weather: "Show the weather", f_show_tips: "Show the advice", female: "Female", male: "Male", neutral: "Neutral", child: "Child", teen: "Teenager", adult: "Adult", senior: "Senior", porcelain: "Porcelain", fair: "Fair", light: "Light", medium: "Medium", olive: "Olive", tan: "Tan", brown: "Brown", deep: "Deep brown", ebony: "Ebony", short: "Short", buzz: "Buzz cut", curly: "Curly", afro: "Afro", bob: "Bob", long: "Long", ponytail: "Ponytail", pigtails: "Pigtails", braids: "Braids", bun: "Bun", receding: "Receding", bald: "Bald", black: "Black", dark_brown: "Dark brown", light_brown: "Light brown", blond: "Blond", platinum: "Platinum", red: "Red", auburn: "Auburn", grey: "Grey", white: "White", blue: "Blue", pink: "Pink", dark: "Dark brown", hazel: "Hazel", green: "Green", none: "None", stubble: "Stubble", moustache: "Moustache", goatee: "Goatee", full: "Full beard", cap: "Cap", headscarf: "Headscarf", turban: "Turban", teal: "Teal", navy: "Navy", orange: "Orange", yellow: "Yellow", olive_green: "Olive green", purple: "Purple", beige: "Beige", trousers: "Trousers", skirt: "Skirt",
+    no_entity: "Choose a weather entity", missing: "Weather entity not found", unavailable: "No weather data right now", feels: "feels like", hot: "Light clothes", warm: "T-shirt weather", mild: "A sweater is enough", cool: "Put on a light jacket", cold: "Put on a warm jacket", frost: "Wrap up warm", umbrella: "Take an umbrella", raincoat: "Rain jacket instead of an umbrella, it is windy", snow: "Snow: boots and gloves", storm: "Thunderstorm: better stay inside", sun: "Sun hat and sunscreen", milder: "Milder later, up to {t}", colder: "Colder later, down to {t}: take a jacket", rain_later: "Rain from about {h}", ice: "Watch out for ice", s_hot: "Light clothes", s_warm: "T-shirt", s_mild: "Sweater", s_cool: "Light jacket", s_cold: "Warm jacket", s_frost: "Wrap up warm", s_umbrella: "Umbrella", s_raincoat: "Rain jacket", s_snow: "Snow gear", s_storm: "Stay inside", arctic: "Bitter cold: cover your face", s_arctic: "Bitter cold", s_rain_later: "Rain later", f_style: "Style", friendly: "Friendly", comic: "Street comic", pictogram: "Pictogram", symbols: "Clothes as symbols", f_entity: "Weather", f_name: "Name", f_person: "Person", f_hairgroup: "Hair", f_look: "Face and headwear", f_clothes: "Clothes", f_display: "Display", f_gender: "Gender", f_age: "Age", f_skin: "Skin", f_hair: "Hairstyle", f_hair_color: "Hair colour", f_eyes: "Eye colour", f_beard: "Beard", f_headwear: "Headwear", f_glasses: "Glasses", f_freckles: "Freckles", f_earrings: "Earrings", f_color: "Top", f_bottom: "Trousers or skirt", f_bottom_color: "Trousers or skirt colour", f_accent_color: "Hat, scarf, umbrella, shoes", f_sense: "Feels the cold (−) or rarely (+)", f_hours: "Hours ahead", f_show_weather: "Show the weather", f_show_tips: "Show the advice", female: "Female", male: "Male", neutral: "Neutral", child: "Child", teen: "Teenager", adult: "Adult", senior: "Senior", porcelain: "Porcelain", fair: "Fair", light: "Light", medium: "Medium", olive: "Olive", tan: "Tan", brown: "Brown", deep: "Deep brown", ebony: "Ebony", short: "Short", buzz: "Buzz cut", curly: "Curly", afro: "Afro", bob: "Bob", long: "Long", ponytail: "Ponytail", pigtails: "Pigtails", braids: "Braids", bun: "Bun", receding: "Receding", bald: "Bald", black: "Black", dark_brown: "Dark brown", light_brown: "Light brown", blond: "Blond", platinum: "Platinum", red: "Red", auburn: "Auburn", grey: "Grey", white: "White", blue: "Blue", pink: "Pink", dark: "Dark brown", hazel: "Hazel", green: "Green", none: "None", stubble: "Stubble", moustache: "Moustache", goatee: "Goatee", full: "Full beard", cap: "Cap", headscarf: "Headscarf", turban: "Turban", teal: "Teal", navy: "Navy", orange: "Orange", yellow: "Yellow", olive_green: "Olive green", purple: "Purple", beige: "Beige", trousers: "Trousers", skirt: "Skirt",
   },
   de: {
-    no_entity: "Wähle eine Wetter-Entität", missing: "Wetter-Entität nicht gefunden", unavailable: "Zurzeit keine Wetterdaten", feels: "gefühlt", hot: "Luftig anziehen", warm: "T-Shirt-Wetter", mild: "Ein Pullover reicht", cool: "Leichte Jacke anziehen", cold: "Warme Jacke anziehen", frost: "Dick einpacken", umbrella: "Schirm mitnehmen", raincoat: "Regenjacke statt Schirm, es ist windig", snow: "Schnee: Stiefel und Handschuhe", storm: "Gewitter: besser drinnen bleiben", sun: "Sonnenhut und Sonnencreme", milder: "Später milder, bis {t}", colder: "Später kälter, bis {t}: Jacke mitnehmen", rain_later: "Regen ab etwa {h}", ice: "Achtung, Glätte", s_hot: "Luftig", s_warm: "T-Shirt", s_mild: "Pullover", s_cool: "Leichte Jacke", s_cold: "Warme Jacke", s_frost: "Dick einpacken", s_umbrella: "Schirm", s_raincoat: "Regenjacke", s_snow: "Schneesachen", s_storm: "Drinnen bleiben", arctic: "Eisig: Gesicht bedecken", s_arctic: "Eisig kalt", s_rain_later: "Später Regen", f_style: "Stil", friendly: "Freundlich", comic: "Street-Comic", f_entity: "Wetter", f_name: "Name", f_person: "Person", f_hairgroup: "Haare", f_look: "Gesicht und Kopfbedeckung", f_clothes: "Kleider", f_display: "Anzeige", f_gender: "Geschlecht", f_age: "Alter", f_skin: "Hautfarbe", f_hair: "Frisur", f_hair_color: "Haarfarbe", f_eyes: "Augenfarbe", f_beard: "Bart", f_headwear: "Kopfbedeckung", f_glasses: "Brille", f_freckles: "Sommersprossen", f_earrings: "Ohrringe", f_color: "Oberteil", f_bottom: "Hose oder Rock", f_bottom_color: "Farbe von Hose oder Rock", f_accent_color: "Mütze, Schal, Schirm, Schuhe", f_sense: "Friert schnell (−) oder selten (+)", f_hours: "Stunden voraus", f_show_weather: "Wetter anzeigen", f_show_tips: "Hinweise anzeigen", female: "Weiblich", male: "Männlich", neutral: "Neutral", child: "Kind", teen: "Teenager", adult: "Erwachsen", senior: "Senior/in", porcelain: "Porzellan", fair: "Sehr hell", light: "Hell", medium: "Mittel", olive: "Oliv", tan: "Gebräunt", brown: "Braun", deep: "Dunkelbraun", ebony: "Sehr dunkel", short: "Kurz", buzz: "Sehr kurz", curly: "Locken", afro: "Afro", bob: "Bob", long: "Lang", ponytail: "Pferdeschwanz", pigtails: "Zwei Zöpfe", braids: "Geflochten", bun: "Dutt", receding: "Lichtes Haar", bald: "Glatze", black: "Schwarz", dark_brown: "Dunkelbraun", light_brown: "Hellbraun", blond: "Blond", platinum: "Platinblond", red: "Rot", auburn: "Kastanie", grey: "Grau", white: "Weiss", blue: "Blau", pink: "Rosa", dark: "Dunkelbraun", hazel: "Haselnuss", green: "Grün", none: "Ohne", stubble: "Stoppeln", moustache: "Schnauz", goatee: "Kinnbart", full: "Vollbart", cap: "Mütze mit Schirm", headscarf: "Kopftuch", turban: "Turban", teal: "Türkis", navy: "Dunkelblau", orange: "Orange", yellow: "Gelb", olive_green: "Olivgrün", purple: "Violett", beige: "Beige", trousers: "Hose", skirt: "Rock",
+    no_entity: "Wähle eine Wetter-Entität", missing: "Wetter-Entität nicht gefunden", unavailable: "Zurzeit keine Wetterdaten", feels: "gefühlt", hot: "Luftig anziehen", warm: "T-Shirt-Wetter", mild: "Ein Pullover reicht", cool: "Leichte Jacke anziehen", cold: "Warme Jacke anziehen", frost: "Dick einpacken", umbrella: "Schirm mitnehmen", raincoat: "Regenjacke statt Schirm, es ist windig", snow: "Schnee: Stiefel und Handschuhe", storm: "Gewitter: besser drinnen bleiben", sun: "Sonnenhut und Sonnencreme", milder: "Später milder, bis {t}", colder: "Später kälter, bis {t}: Jacke mitnehmen", rain_later: "Regen ab etwa {h}", ice: "Achtung, Glätte", s_hot: "Luftig", s_warm: "T-Shirt", s_mild: "Pullover", s_cool: "Leichte Jacke", s_cold: "Warme Jacke", s_frost: "Dick einpacken", s_umbrella: "Schirm", s_raincoat: "Regenjacke", s_snow: "Schneesachen", s_storm: "Drinnen bleiben", arctic: "Eisig: Gesicht bedecken", s_arctic: "Eisig kalt", s_rain_later: "Später Regen", f_style: "Stil", friendly: "Freundlich", comic: "Street-Comic", pictogram: "Piktogramm", symbols: "Kleidersymbole", f_entity: "Wetter", f_name: "Name", f_person: "Person", f_hairgroup: "Haare", f_look: "Gesicht und Kopfbedeckung", f_clothes: "Kleider", f_display: "Anzeige", f_gender: "Geschlecht", f_age: "Alter", f_skin: "Hautfarbe", f_hair: "Frisur", f_hair_color: "Haarfarbe", f_eyes: "Augenfarbe", f_beard: "Bart", f_headwear: "Kopfbedeckung", f_glasses: "Brille", f_freckles: "Sommersprossen", f_earrings: "Ohrringe", f_color: "Oberteil", f_bottom: "Hose oder Rock", f_bottom_color: "Farbe von Hose oder Rock", f_accent_color: "Mütze, Schal, Schirm, Schuhe", f_sense: "Friert schnell (−) oder selten (+)", f_hours: "Stunden voraus", f_show_weather: "Wetter anzeigen", f_show_tips: "Hinweise anzeigen", female: "Weiblich", male: "Männlich", neutral: "Neutral", child: "Kind", teen: "Teenager", adult: "Erwachsen", senior: "Senior/in", porcelain: "Porzellan", fair: "Sehr hell", light: "Hell", medium: "Mittel", olive: "Oliv", tan: "Gebräunt", brown: "Braun", deep: "Dunkelbraun", ebony: "Sehr dunkel", short: "Kurz", buzz: "Sehr kurz", curly: "Locken", afro: "Afro", bob: "Bob", long: "Lang", ponytail: "Pferdeschwanz", pigtails: "Zwei Zöpfe", braids: "Geflochten", bun: "Dutt", receding: "Lichtes Haar", bald: "Glatze", black: "Schwarz", dark_brown: "Dunkelbraun", light_brown: "Hellbraun", blond: "Blond", platinum: "Platinblond", red: "Rot", auburn: "Kastanie", grey: "Grau", white: "Weiss", blue: "Blau", pink: "Rosa", dark: "Dunkelbraun", hazel: "Haselnuss", green: "Grün", none: "Ohne", stubble: "Stoppeln", moustache: "Schnauz", goatee: "Kinnbart", full: "Vollbart", cap: "Mütze mit Schirm", headscarf: "Kopftuch", turban: "Turban", teal: "Türkis", navy: "Dunkelblau", orange: "Orange", yellow: "Gelb", olive_green: "Olivgrün", purple: "Violett", beige: "Beige", trousers: "Hose", skirt: "Rock",
   },
   fr: {
-    no_entity: "Choisissez une entité météo", missing: "Entité météo introuvable", unavailable: "Pas de données météo", feels: "ressenti", hot: "Vêtements légers", warm: "Un t-shirt suffit", mild: "Un pull suffit", cool: "Mettre une veste légère", cold: "Mettre une veste chaude", frost: "Bien se couvrir", umbrella: "Prendre un parapluie", raincoat: "Veste de pluie plutôt que parapluie, il y a du vent", snow: "Neige : bottes et gants", storm: "Orage : mieux vaut rester à l'intérieur", sun: "Chapeau et crème solaire", milder: "Plus doux ensuite, jusqu'à {t}", colder: "Plus froid ensuite, jusqu'à {t} : prendre une veste", rain_later: "Pluie vers {h}", ice: "Attention au verglas", s_hot: "Léger", s_warm: "T-shirt", s_mild: "Pull", s_cool: "Veste légère", s_cold: "Veste chaude", s_frost: "Bien couvert", s_umbrella: "Parapluie", s_raincoat: "Veste de pluie", s_snow: "Tenue de neige", s_storm: "Rester dedans", arctic: "Glacial : se couvrir le visage", s_arctic: "Glacial", s_rain_later: "Pluie plus tard", f_style: "Style", friendly: "Sympathique", comic: "BD urbaine", f_entity: "Météo", f_name: "Nom", f_person: "Personne", f_hairgroup: "Cheveux", f_look: "Visage et couvre-chef", f_clothes: "Vêtements", f_display: "Affichage", f_gender: "Genre", f_age: "Âge", f_skin: "Peau", f_hair: "Coiffure", f_hair_color: "Couleur des cheveux", f_eyes: "Couleur des yeux", f_beard: "Barbe", f_headwear: "Couvre-chef", f_glasses: "Lunettes", f_freckles: "Taches de rousseur", f_earrings: "Boucles d'oreilles", f_color: "Haut", f_bottom: "Pantalon ou jupe", f_bottom_color: "Couleur du pantalon ou de la jupe", f_accent_color: "Bonnet, écharpe, parapluie, chaussures", f_sense: "Frileux (−) ou non (+)", f_hours: "Heures à venir", f_show_weather: "Afficher la météo", f_show_tips: "Afficher les conseils", female: "Féminin", male: "Masculin", neutral: "Neutre", child: "Enfant", teen: "Adolescent", adult: "Adulte", senior: "Senior", porcelain: "Porcelaine", fair: "Très claire", light: "Claire", medium: "Moyenne", olive: "Olive", tan: "Bronzée", brown: "Brune", deep: "Brun foncé", ebony: "Ébène", short: "Courts", buzz: "Rasés", curly: "Bouclés", afro: "Afro", bob: "Carré", long: "Longs", ponytail: "Queue de cheval", pigtails: "Couettes", braids: "Tresses", bun: "Chignon", receding: "Clairsemés", bald: "Chauve", black: "Noir", dark_brown: "Brun foncé", light_brown: "Châtain clair", blond: "Blond", platinum: "Platine", red: "Rouge", auburn: "Auburn", grey: "Gris", white: "Blanc", blue: "Bleu", pink: "Rose", dark: "Brun foncé", hazel: "Noisette", green: "Vert", none: "Sans", stubble: "Barbe naissante", moustache: "Moustache", goatee: "Bouc", full: "Barbe complète", cap: "Casquette", headscarf: "Foulard", turban: "Turban", teal: "Turquoise", navy: "Bleu marine", orange: "Orange", yellow: "Jaune", olive_green: "Vert olive", purple: "Violet", beige: "Beige", trousers: "Pantalon", skirt: "Jupe",
+    no_entity: "Choisissez une entité météo", missing: "Entité météo introuvable", unavailable: "Pas de données météo", feels: "ressenti", hot: "Vêtements légers", warm: "Un t-shirt suffit", mild: "Un pull suffit", cool: "Mettre une veste légère", cold: "Mettre une veste chaude", frost: "Bien se couvrir", umbrella: "Prendre un parapluie", raincoat: "Veste de pluie plutôt que parapluie, il y a du vent", snow: "Neige : bottes et gants", storm: "Orage : mieux vaut rester à l'intérieur", sun: "Chapeau et crème solaire", milder: "Plus doux ensuite, jusqu'à {t}", colder: "Plus froid ensuite, jusqu'à {t} : prendre une veste", rain_later: "Pluie vers {h}", ice: "Attention au verglas", s_hot: "Léger", s_warm: "T-shirt", s_mild: "Pull", s_cool: "Veste légère", s_cold: "Veste chaude", s_frost: "Bien couvert", s_umbrella: "Parapluie", s_raincoat: "Veste de pluie", s_snow: "Tenue de neige", s_storm: "Rester dedans", arctic: "Glacial : se couvrir le visage", s_arctic: "Glacial", s_rain_later: "Pluie plus tard", f_style: "Style", friendly: "Sympathique", comic: "BD urbaine", pictogram: "Pictogramme", symbols: "Vêtements en symboles", f_entity: "Météo", f_name: "Nom", f_person: "Personne", f_hairgroup: "Cheveux", f_look: "Visage et couvre-chef", f_clothes: "Vêtements", f_display: "Affichage", f_gender: "Genre", f_age: "Âge", f_skin: "Peau", f_hair: "Coiffure", f_hair_color: "Couleur des cheveux", f_eyes: "Couleur des yeux", f_beard: "Barbe", f_headwear: "Couvre-chef", f_glasses: "Lunettes", f_freckles: "Taches de rousseur", f_earrings: "Boucles d'oreilles", f_color: "Haut", f_bottom: "Pantalon ou jupe", f_bottom_color: "Couleur du pantalon ou de la jupe", f_accent_color: "Bonnet, écharpe, parapluie, chaussures", f_sense: "Frileux (−) ou non (+)", f_hours: "Heures à venir", f_show_weather: "Afficher la météo", f_show_tips: "Afficher les conseils", female: "Féminin", male: "Masculin", neutral: "Neutre", child: "Enfant", teen: "Adolescent", adult: "Adulte", senior: "Senior", porcelain: "Porcelaine", fair: "Très claire", light: "Claire", medium: "Moyenne", olive: "Olive", tan: "Bronzée", brown: "Brune", deep: "Brun foncé", ebony: "Ébène", short: "Courts", buzz: "Rasés", curly: "Bouclés", afro: "Afro", bob: "Carré", long: "Longs", ponytail: "Queue de cheval", pigtails: "Couettes", braids: "Tresses", bun: "Chignon", receding: "Clairsemés", bald: "Chauve", black: "Noir", dark_brown: "Brun foncé", light_brown: "Châtain clair", blond: "Blond", platinum: "Platine", red: "Rouge", auburn: "Auburn", grey: "Gris", white: "Blanc", blue: "Bleu", pink: "Rose", dark: "Brun foncé", hazel: "Noisette", green: "Vert", none: "Sans", stubble: "Barbe naissante", moustache: "Moustache", goatee: "Bouc", full: "Barbe complète", cap: "Casquette", headscarf: "Foulard", turban: "Turban", teal: "Turquoise", navy: "Bleu marine", orange: "Orange", yellow: "Jaune", olive_green: "Vert olive", purple: "Violet", beige: "Beige", trousers: "Pantalon", skirt: "Jupe",
   },
   it: {
-    no_entity: "Scegli un'entità meteo", missing: "Entità meteo non trovata", unavailable: "Nessun dato meteo al momento", feels: "percepiti", hot: "Vestiti leggeri", warm: "Basta una maglietta", mild: "Basta un maglione", cool: "Mettere una giacca leggera", cold: "Mettere una giacca calda", frost: "Coprirsi bene", umbrella: "Prendere l'ombrello", raincoat: "Giacca da pioggia invece dell'ombrello, c'è vento", snow: "Neve: stivali e guanti", storm: "Temporale: meglio restare al chiuso", sun: "Cappello e crema solare", milder: "Più mite dopo, fino a {t}", colder: "Più freddo dopo, fino a {t}: prendere una giacca", rain_later: "Pioggia verso le {h}", ice: "Attenzione al ghiaccio", s_hot: "Leggero", s_warm: "Maglietta", s_mild: "Maglione", s_cool: "Giacca leggera", s_cold: "Giacca calda", s_frost: "Ben coperti", s_umbrella: "Ombrello", s_raincoat: "Impermeabile", s_snow: "Abiti da neve", s_storm: "Stare in casa", arctic: "Gelo: coprire il viso", s_arctic: "Gelo intenso", s_rain_later: "Pioggia dopo", f_style: "Stile", friendly: "Simpatico", comic: "Fumetto urbano", f_entity: "Meteo", f_name: "Nome", f_person: "Persona", f_hairgroup: "Capelli", f_look: "Viso e copricapo", f_clothes: "Vestiti", f_display: "Visualizzazione", f_gender: "Genere", f_age: "Età", f_skin: "Pelle", f_hair: "Acconciatura", f_hair_color: "Colore dei capelli", f_eyes: "Colore degli occhi", f_beard: "Barba", f_headwear: "Copricapo", f_glasses: "Occhiali", f_freckles: "Lentiggini", f_earrings: "Orecchini", f_color: "Parte superiore", f_bottom: "Pantaloni o gonna", f_bottom_color: "Colore di pantaloni o gonna", f_accent_color: "Berretto, sciarpa, ombrello, scarpe", f_sense: "Freddoloso (−) o no (+)", f_hours: "Ore successive", f_show_weather: "Mostra il meteo", f_show_tips: "Mostra i consigli", female: "Femminile", male: "Maschile", neutral: "Neutro", child: "Bambino", teen: "Adolescente", adult: "Adulto", senior: "Anziano", porcelain: "Porcellana", fair: "Molto chiara", light: "Chiara", medium: "Media", olive: "Olivastra", tan: "Abbronzata", brown: "Marrone", deep: "Marrone scuro", ebony: "Ebano", short: "Corti", buzz: "Rasati", curly: "Ricci", afro: "Afro", bob: "Caschetto", long: "Lunghi", ponytail: "Coda", pigtails: "Codini", braids: "Trecce", bun: "Chignon", receding: "Radi", bald: "Calvo", black: "Nero", dark_brown: "Castano scuro", light_brown: "Castano chiaro", blond: "Biondo", platinum: "Platino", red: "Rosso", auburn: "Ramato", grey: "Grigio", white: "Bianco", blue: "Blu", pink: "Rosa", dark: "Marrone scuro", hazel: "Nocciola", green: "Verde", none: "Senza", stubble: "Barba incolta", moustache: "Baffi", goatee: "Pizzetto", full: "Barba piena", cap: "Cappellino", headscarf: "Foulard", turban: "Turbante", teal: "Turchese", navy: "Blu scuro", orange: "Arancione", yellow: "Giallo", olive_green: "Verde oliva", purple: "Viola", beige: "Beige", trousers: "Pantaloni", skirt: "Gonna",
+    no_entity: "Scegli un'entità meteo", missing: "Entità meteo non trovata", unavailable: "Nessun dato meteo al momento", feels: "percepiti", hot: "Vestiti leggeri", warm: "Basta una maglietta", mild: "Basta un maglione", cool: "Mettere una giacca leggera", cold: "Mettere una giacca calda", frost: "Coprirsi bene", umbrella: "Prendere l'ombrello", raincoat: "Giacca da pioggia invece dell'ombrello, c'è vento", snow: "Neve: stivali e guanti", storm: "Temporale: meglio restare al chiuso", sun: "Cappello e crema solare", milder: "Più mite dopo, fino a {t}", colder: "Più freddo dopo, fino a {t}: prendere una giacca", rain_later: "Pioggia verso le {h}", ice: "Attenzione al ghiaccio", s_hot: "Leggero", s_warm: "Maglietta", s_mild: "Maglione", s_cool: "Giacca leggera", s_cold: "Giacca calda", s_frost: "Ben coperti", s_umbrella: "Ombrello", s_raincoat: "Impermeabile", s_snow: "Abiti da neve", s_storm: "Stare in casa", arctic: "Gelo: coprire il viso", s_arctic: "Gelo intenso", s_rain_later: "Pioggia dopo", f_style: "Stile", friendly: "Simpatico", comic: "Fumetto urbano", pictogram: "Pittogramma", symbols: "Vestiti come simboli", f_entity: "Meteo", f_name: "Nome", f_person: "Persona", f_hairgroup: "Capelli", f_look: "Viso e copricapo", f_clothes: "Vestiti", f_display: "Visualizzazione", f_gender: "Genere", f_age: "Età", f_skin: "Pelle", f_hair: "Acconciatura", f_hair_color: "Colore dei capelli", f_eyes: "Colore degli occhi", f_beard: "Barba", f_headwear: "Copricapo", f_glasses: "Occhiali", f_freckles: "Lentiggini", f_earrings: "Orecchini", f_color: "Parte superiore", f_bottom: "Pantaloni o gonna", f_bottom_color: "Colore di pantaloni o gonna", f_accent_color: "Berretto, sciarpa, ombrello, scarpe", f_sense: "Freddoloso (−) o no (+)", f_hours: "Ore successive", f_show_weather: "Mostra il meteo", f_show_tips: "Mostra i consigli", female: "Femminile", male: "Maschile", neutral: "Neutro", child: "Bambino", teen: "Adolescente", adult: "Adulto", senior: "Anziano", porcelain: "Porcellana", fair: "Molto chiara", light: "Chiara", medium: "Media", olive: "Olivastra", tan: "Abbronzata", brown: "Marrone", deep: "Marrone scuro", ebony: "Ebano", short: "Corti", buzz: "Rasati", curly: "Ricci", afro: "Afro", bob: "Caschetto", long: "Lunghi", ponytail: "Coda", pigtails: "Codini", braids: "Trecce", bun: "Chignon", receding: "Radi", bald: "Calvo", black: "Nero", dark_brown: "Castano scuro", light_brown: "Castano chiaro", blond: "Biondo", platinum: "Platino", red: "Rosso", auburn: "Ramato", grey: "Grigio", white: "Bianco", blue: "Blu", pink: "Rosa", dark: "Marrone scuro", hazel: "Nocciola", green: "Verde", none: "Senza", stubble: "Barba incolta", moustache: "Baffi", goatee: "Pizzetto", full: "Barba piena", cap: "Cappellino", headscarf: "Foulard", turban: "Turbante", teal: "Turchese", navy: "Blu scuro", orange: "Arancione", yellow: "Giallo", olive_green: "Verde oliva", purple: "Viola", beige: "Beige", trousers: "Pantaloni", skirt: "Gonna",
   },
 };
 const text = (hass, key) => {
@@ -415,7 +415,7 @@ function sceneOf(condition, night) {
 }
 function scene({ kind, night }, o) {
   const sky = night ? (kind === "sunny" || kind === "partlycloudy" ? SKY.night : SKY.night_cloudy) : SKY[kind];
-  const white = night ? "#8C9AB5" : "#FFFFFF", dull = night ? "#5D6A82" : "#EDF1F4";
+  const white = night ? "#8C9AB5" : "#FFFFFF", dull = night ? "#5D6A82" : { rain: "#A3B3BE", storm: "#737C92" }[kind] || "#EDF1F4";
   let ground = o && (o.snow || kind === "snow") ? "#FFFFFF" : o && (o.level === "frost" || o.level === "arctic") ? "#E4F1F8" : o && o.level === "hot" ? "#F0D288" : o && (o.level === "cool" || o.level === "cold") ? "#A9B178" : "#92C463";
   if (night) ground = shade(ground, 0.5);
   const d = [];
@@ -447,7 +447,7 @@ function inked(d, fill, shadow = "", width = 3.2) {
 }
 const ink = (d, w = 2.2, c = INK, o = 1) => `<path d="${d}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" opacity="${o}"/>`;
 // [width, height, head, how far the head sinks into the shoulders]
-const COMIC_BUILD = { child: [0.86, 0.62, 1.16, 15], teen: [0.9, 0.86, 1.02, 6], adult: [1, 1, 1, 3], senior: [1, 0.96, 1, 3] };
+const COMIC_BUILD = { child: [0.96, 0.72, 1.22, 13], teen: [0.9, 0.86, 1.02, 6], adult: [1, 1, 1, 3], senior: [1, 0.96, 1, 3] };
 
 function comicHairBack(o) {
   const c = shade(o.hair, 0.86), covered = o.hat || o.fur || o.hood === "up";
@@ -618,7 +618,7 @@ const skyline = (color, base, seed, lit) => {
 function comicScene(where, o) {
   const { kind, night } = where, hot = o.level === "hot" && !night && (kind === "sunny" || kind === "partlycloudy");
   const key = hot ? "hot" : night ? (kind === "sunny" || kind === "partlycloudy" ? "night" : "night_cloudy") : kind, sky = COMIC_SKY[key];
-  const puff = (x, y, k, cls) => `<g transform="translate(${x} ${y}) scale(${k})"><path class="${cls}" d="M-20 18 a17 17 0 0 1 2 -34 a24 24 0 0 1 44 -4 a18 18 0 0 1 24 12 a14 14 0 0 1 -2 26Z" fill="${night ? "#6E7899" : "#fff"}" stroke="${INK}" stroke-width="3.4" stroke-linejoin="round"/></g>`;
+  const puff = (x, y, k, cls) => `<g transform="translate(${x} ${y}) scale(${k})"><path class="${cls}" d="M-20 18 a17 17 0 0 1 2 -34 a24 24 0 0 1 44 -4 a18 18 0 0 1 24 12 a14 14 0 0 1 -2 26Z" fill="${night ? "#5A6486" : { rain: "#7F93A6", storm: "#62587F", snow: "#CBD8E8", cloudy: "#DFE6EB" }[kind] || "#fff"}" stroke="${INK}" stroke-width="3.4" stroke-linejoin="round"/></g>`;
   const up = [], down = [];
   if (hot) up.push(`<g class="sun"><circle cx="318" cy="96" r="72" fill="#FFF0B8" opacity=".5"/></g><circle cx="318" cy="96" r="54" fill="#FFF0B8"/>`);
   else if (kind === "sunny" || kind === "partlycloudy" || kind === "wind") up.push(night ? `<path d="M322 36 A24 24 0 1 0 342 66 A20 20 0 0 1 322 36Z" fill="#F3EFD6" stroke="${INK}" stroke-width="3"/>` : `<g class="sun"><circle cx="318" cy="58" r="38" fill="#FFE082" opacity=".4"/></g><circle cx="318" cy="58" r="26" fill="#FFD54F" stroke="${INK}" stroke-width="3.4"/>`);
@@ -627,7 +627,7 @@ function comicScene(where, o) {
   if (["cloudy", "rain", "storm", "snow", "wind"].includes(kind)) up.push(puff(80, 64, 1.1, "drift"), puff(300, 44, 0.9, "drift slow"), puff(490, 70, 1, "drift"));
   if (kind === "storm") up.push(`<path class="bolt" d="M420 70 l-22 50 h18 l-14 44 l44 -60 h-20 l16 -34z" fill="#FFE57F" stroke="${INK}" stroke-width="3" stroke-linejoin="round"/>`);
   const mix = (hex, f) => shade(hex, f);
-  if (kind === "snow" && !night) down.push(`<path d="M-20 300 L150 120 L230 210 L330 100 L430 220 L500 150 L630 300Z" fill="#9DB9DE"/><path d="M150 120 L178 152 L160 146 L148 162 L130 141Z M330 100 L364 140 L344 134 L330 152 L314 130 L302 131Z M500 150 L522 174 L506 170 L494 182 L484 164Z" fill="#fff"/>`);
+  if (kind === "snow" && !night) down.push(`<path d="M-20 306 L140 206 L220 258 L330 186 L430 256 L500 212 L630 306Z" fill="#9DB9DE"/><path d="M140 206 L170 224 L156 222 L146 232 L128 220 L116 221Z M330 186 L362 208 L346 206 L332 218 L316 204 L302 204Z M500 212 L524 229 L508 227 L496 236 L482 224Z" fill="#fff"/>`);
   else if (hot) down.push(skyline("#B2376E", 292, 3), skyline("#6E2463", 306, 40));
   else if (night) down.push(skyline("#2A2A5C", 292, 7, "#F5C84B"), skyline("#171A3A", 306, 60, "#4FD6E8"));
   else down.push(skyline(mix(sky[0], 0.86), 292, 12), skyline(mix(sky[0], 0.6), 306, 90));
@@ -640,6 +640,142 @@ function comicScene(where, o) {
     back: svg("Min", `<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">${sky.map((c, i) => `<stop offset="${i / 2}" stop-color="${c}"/>`).join("")}</linearGradient></defs><rect width="600" height="336" fill="url(#sky)"/>${up.join("")}`) + svg("Max", `<defs><pattern id="dots" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><circle cx="4" cy="4" r="1.7" fill="#000" opacity=".12"/></pattern></defs>${down.join("")}<rect width="600" height="336" fill="url(#dots)"/>`),
     front: scene(where, o).front,
   };
+}
+
+
+// --- drawing, pictograms --------------------------------------------------------
+const SIGN = { hot: "#E8663C", sunny: "#E08A2E", partlycloudy: "#3E93B8", cloudy: "#5E7F93", fog: "#7F8E98", rain: "#3D5A80", storm: "#4A3F73", snow: "#3F7FC4", wind: "#3F8391", frost: "#5873AE", night: "#232B52" };
+function signColor({ kind, night }, o) {
+  if (night) return SIGN.night;
+  if (o.level === "hot" && kind !== "rain" && kind !== "storm") return SIGN.hot;
+  if ((o.level === "frost" || o.level === "arctic") && (kind === "sunny" || kind === "partlycloudy" || kind === "cloudy")) return SIGN.frost;
+  return SIGN[kind];
+}
+const channels = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+// A colour that can be told from the background (and is not white, which is the person).
+function apart(hex, bg) {
+  const far = (c) => Math.hypot(...channels(c).map((v, i) => v - channels(bg)[i]));
+  let c = hex;
+  if (Math.min(...channels(c)) > 215) c = "#CFD6DC";
+  if (far(c) < 95) {
+    const pale = "#" + channels(hex).map((v) => Math.round(v + (255 - v) * 0.45).toString(16).padStart(2, "0")).join("");
+    c = [pale, shade(hex, 0.45), "#F2C14E"].find((x) => far(x) >= 95) || "#F2C14E";
+  }
+  return c;
+}
+const WX = {
+  sun: `<circle r="11" fill="#fff"/>${line("M0 -19v-6M0 19v6M19 0h6M-19 0h-6M13.5 -13.5l4 -4M-13.5 -13.5l-4 -4M13.5 13.5l4 4M-13.5 13.5l-4 4", 4, "#fff")}`,
+  part: `<circle cx="9" cy="-7" r="10" fill="#fff" opacity=".7"/><path d="M-20 16 a11 11 0 0 1 2 -21 a15 15 0 0 1 28 2 a10 10 0 0 1 6 19Z" fill="#fff"/>`,
+  cloud: `<path d="M-20 12 a12 12 0 0 1 2 -23 a16 16 0 0 1 30 2 a11 11 0 0 1 6 21Z" fill="#fff"/>`,
+  fog: line("M-20 -12h40M-14 0h34M-20 12h30", 5, "#fff"),
+  rain: `<path d="M-20 4 a11 11 0 0 1 2 -21 a15 15 0 0 1 28 2 a10 10 0 0 1 6 19Z" fill="#fff"/>${line("M-11 12l-4 10M1 12l-4 10M13 12l-4 10", 4, "#fff")}`,
+  storm: `<path d="M-20 4 a11 11 0 0 1 2 -21 a15 15 0 0 1 28 2 a10 10 0 0 1 6 19Z" fill="#fff"/><path d="M4 7 l-9 12 h7 l-4 10 l13 -15 h-7 l5 -7z" fill="#FFD54F"/>`,
+  snow: line("M0 -20V20M-17 -10L17 10M17 -10L-17 10M-5 -16l5 5 5 -5M-5 16l5 -5 5 5", 4, "#fff"),
+  wind: line("M-22 -8h30q9 0 9 -8q0 -7 -8 -7M-22 4h40M-22 16h26q8 0 8 7q0 6 -6 6", 4.5, "#fff"),
+  moon: `<path d="M6 -20a20 20 0 1 0 14 28a17 17 0 0 1 -14 -28z" fill="#fff"/>`,
+};
+function signScene(where, o) {
+  const { kind, night } = where, bg = signColor(where, o);
+  const wx = night && (kind === "sunny" || kind === "partlycloudy") ? "moon" : { sunny: "sun", partlycloudy: "part", cloudy: "cloud", fog: "fog", rain: "rain", storm: "storm", snow: "snow", wind: "wind" }[kind];
+  return { back: `<svg class="back" aria-hidden="true"><rect width="100%" height="100%" fill="${bg}"/></svg><svg class="wx WXNAMED" viewBox="-32 -32 64 64" aria-hidden="true">${WX[wx]}</svg>`, front: "", bg };
+}
+
+// A white person as on a sign, with the clothes in colour.
+function signFigure(o, bg) {
+  const a = apart(o.topC, bg), b = apart(o.accent, bg), hair = shade(bg, 0.5), W = "#fff", s = [], k = { child: 0.74, teen: 0.9, adult: 1, senior: 0.96 }[o.age] || 1;
+  const coat = o.top === "rain", parka = o.top === "winter", low = coat ? 214 : parka ? 196 : 178;
+  if (o.legs === "shorts") s.push(line("M86 180 V262 M114 180 V262", 22, W), line("M86 180 V206 M114 180 V206", 28, b));
+  else s.push(line("M86 180 V262 M114 180 V262", o.legs === "snow" ? 28 : 24, o.legs === "snow" ? b : W));
+  if (o.legs === "skirt") s.push(`<path d="M76 168 H124 L142 226 Q100 238 58 226Z" fill="${W}" stroke="${bg}" stroke-width="5" stroke-linejoin="round"/>`);
+  if (o.feet === "rain" || o.feet === "winter") s.push(line("M86 238 V264 M114 238 V264", 28, b), line("M78 270 H92 M108 270 H122", 18, b), o.feet === "winter" ? line("M74 230 H98 M102 230 H126", 7, W) : "");
+  else s.push(o.feet === "sandals" ? line("M74 272 H94 M106 272 H126", 9, b) : line("M78 268 H92 M108 268 H122", 16, b));
+  const right = o.umbrella ? "M128 104 L150 136 L160 112" : o.wave ? "M128 104 L154 112 L164 76" : "M130 106 L146 170", sleeves = o.top !== "tshirt";
+  for (const [d, x, y] of [["M70 106 L54 170", 54, 172], [right, ...(o.umbrella ? [160, 110] : o.wave ? [164, 74] : [146, 172])]]) {
+    s.push(line(d, 21, sleeves ? a : W));
+    if (o.gloves) s.push(`<circle cx="${x}" cy="${y}" r="13" fill="${b}" stroke="${bg}" stroke-width="4"/>`);
+    else if (sleeves) s.push(`<circle cx="${x}" cy="${y}" r="10.5" fill="${W}"/>`);
+  }
+  if (!sleeves) s.push(line("M71 106 L65 126", 25, a), line(o.wave ? "M129 106 L145 110" : o.umbrella ? "M129 106 L139 120" : "M129 106 L135 126", 25, a));
+  const fl = coat ? 12 : 2;
+  s.push(`<path d="M72 92 Q100 84 128 92 Q136 96 134 112 L${130 + fl} ${low - 6} Q${130 + fl} ${low} ${124 + fl} ${low} H${76 - fl} Q${70 - fl} ${low} ${70 - fl} ${low - 6} L66 112 Q64 96 72 92Z" fill="${a}" stroke="${bg}" stroke-width="4" stroke-linejoin="round"/>`);
+  if (parka) s.push(line("M70 122 H130 M69 148 H131 M69 173 H131 M100 92 V192", 4, bg));
+  if (coat) s.push(line("M100 92 V210", 4, bg), [112, 138, 164].map((y) => `<circle cx="112" cy="${y}" r="4.5" fill="${bg}"/>`).join(""));
+  if (o.top === "wind") s.push(line("M100 90 V176 M80 152 l10 7 M120 152 l-10 7", 4, bg));
+  if (o.top === "sweater") s.push(line("M72 130 l9 -8 l9 8 l10 -8 l10 8 l9 -8 l9 8", 5, W), line("M76 170 H124", 4, bg));
+  // head and hair
+  const covered = o.hat || o.hood === "up" || o.fur || o.cover;
+  if (!covered && (o.cut === "afro" || o.cut === "curly")) s.push(`<circle cx="100" cy="48" r="${o.cut === "afro" ? 39 : 34}" fill="${hair}" stroke="${bg}" stroke-width="4"/>`);
+  if (!o.cover && (o.cut === "pigtails" || o.cut === "braids")) s.push(`<path d="M74 50 Q52 44 ${o.cut === "braids" ? "50 112 Q62 108 74 64" : "48 80 Q66 78 76 64"}Z M126 50 Q148 44 ${o.cut === "braids" ? "150 112 Q138 108 126 64" : "152 80 Q134 78 124 64"}Z" fill="${hair}" stroke="${bg}" stroke-width="3"/>`);
+  if (!o.cover && (o.cut === "long" || o.cut === "bob")) {
+    const y = o.cut === "long" ? 108 : 88;
+    s.push(`<path d="M66 ${y} Q58 27 100 25 Q142 27 134 ${y} Q124 ${y + 5} 118 ${y} L118 60 H82 V${y} Q76 ${y + 5} 66 ${y}Z" fill="${hair}" stroke="${bg}" stroke-width="3" stroke-linejoin="round"/>`);
+  }
+  if (!covered && o.cut === "ponytail") s.push(`<path d="M120 40 Q160 40 148 92 Q134 82 120 62Z" fill="${hair}" stroke="${bg}" stroke-width="3"/>`);
+  if (!covered && o.cut === "bun") s.push(`<circle cx="100" cy="24" r="11" fill="${hair}" stroke="${bg}" stroke-width="4"/>`);
+  if (o.hood === "up" || o.fur) s.push(`<path d="M100 16 C62 16 60 54 64 76 Q80 98 100 98 Q120 98 136 76 C140 54 138 16 100 16Z" fill="${a}" stroke="${bg}" stroke-width="4"/>${o.fur ? `<circle cx="100" cy="58" r="27" fill="none" stroke="#fff" stroke-width="5" stroke-dasharray="5 4"/>` : ""}`);
+  if (o.cover === "headscarf") s.push(`<path d="M100 22 C64 22 62 58 66 80 Q80 104 100 104 Q120 104 134 80 C138 58 136 22 100 22Z" fill="${b}" stroke="${bg}" stroke-width="4"/>`);
+  const small = o.hood === "up" || o.fur || o.cover === "headscarf";
+  s.push(`<circle cx="100" cy="${small ? 58 : 56}" r="${small ? 20 : 26}" fill="${W}"${small ? "" : ` stroke="${bg}" stroke-width="4"`}/>`);
+  if (o.cover === "turban") s.push(`<path d="M68 56 Q62 18 100 18 Q138 18 132 56 Q100 32 68 56Z" fill="${b}"/>${line("M72 52 Q100 22 124 28 M128 52 Q100 24 78 30", 3.4, bg)}`);
+  if (o.hat === "beanie") s.push(`<path d="M70 48 Q68 18 100 18 Q132 18 130 48Z" fill="${b}"/><rect x="66" y="42" width="68" height="14" rx="7" fill="${W}" stroke="${bg}" stroke-width="3"/><circle cx="100" cy="15" r="9" fill="${W}" stroke="${bg}" stroke-width="3"/>`);
+  if (o.hat === "sun") s.push(`<path d="M40 44 Q100 24 160 44 Q160 54 148 53 Q100 40 52 53 Q40 54 40 44Z" fill="${b}" stroke="${bg}" stroke-width="3"/><path d="M72 38 Q74 12 100 12 Q126 12 128 38 Q100 30 72 38Z" fill="${b}"/>`);
+  if (o.hat === "cap") s.push(`<path d="M70 48 Q68 22 100 22 Q132 22 130 48Z" fill="${b}"/>${line("M62 50 H108", 8, b)}`);
+  if (o.shades) s.push(`<path d="M76 56 H97 Q97 69 87 69 Q76 69 76 56Z M103 56 H124 Q124 69 113 69 Q103 69 103 56Z" fill="${bg}"/>${line("M95 59 h10", 4, bg)}`);
+  else if (o.goggles) s.push(`<rect x="76" y="55" width="48" height="19" rx="9" fill="${b}" stroke="${bg}" stroke-width="4"/>`);
+  else if (o.glasses) s.push(`<g fill="none" stroke="${bg}" stroke-width="3.4"><circle cx="90" cy="60" r="7.5"/><circle cx="110" cy="60" r="7.5"/><path d="M97.5 59h5"/></g>`);
+  if (o.veil) s.push(`<path d="M${small ? 81 : 75} 64 Q100 70 ${small ? 119 : 125} 64 Q118 82 100 ${small ? 79 : 83} Q82 82 ${small ? 81 : 75} 64Z" fill="${b}"/>`);
+  if (o.scarf) s.push(line("M78 92 Q100 102 122 92", 15, b), o.wind ? line("M80 94 Q52 82 30 98", 14, b) : line("M114 98 V136", 14, b));
+  if (o.age === "senior" && !o.umbrella && !o.wave) s.push(line("M150 172 V270 M150 172 Q150 160 160 160", 6, W));
+  if (o.umbrella) s.push(line("M160 130 V6", 5, W), `<path d="M74 26 Q84 -42 160 -42 Q236 -42 246 26 Q232 14 217 26 Q203 12 189 26 Q174 12 160 26 Q146 12 132 26 Q117 12 103 26 Q88 14 74 26Z" fill="${b}" stroke="${bg}" stroke-width="3" stroke-linejoin="round" transform="translate(48 0) scale(.7 .9)"/>`);
+  return `<g transform="translate(100 276) scale(${k}) translate(-100 -276)">${s.join("")}</g>`;
+}
+
+// Only the clothes, as symbols of 48 x 48; "BG" is the background.
+const SYMBOL = {
+  tshirt: `<path d="M15 8 L5 15 L10 23 L14 21 V41 H34 V21 L38 23 L43 15 L33 8 Q24 15 15 8Z" fill="C"/>`,
+  sweater: `<path d="M15 7 L6 13 L3 38 H10 L13 23 V42 H35 V23 L38 38 H45 L42 13 L33 7 Q24 13 15 7Z" fill="C"/>${line("M14 28 l4 -3 4 3 4 -3 4 3 4 -3", 2.2, "BG")}`,
+  wind: `<path d="M15 6 L6 12 L3 38 H10 L13 23 V42 H35 V23 L38 38 H45 L42 12 L33 6 L24 14Z" fill="C"/>${line("M24 15V41M16 33l4 3M32 33l-4 3", 2.4, "BG")}`,
+  rain: `<path d="M15 5 L6 11 L3 34 H10 L13 22 L10 45 H38 L35 22 L38 34 H45 L42 11 L33 5 L24 13Z" fill="C"/>${line("M24 14V44", 2.4, "BG")}<circle cx="29" cy="21" r="1.8" fill="BG"/><circle cx="29" cy="30" r="1.8" fill="BG"/>`,
+  winter: `<path d="M15 8 L7 12 L3 37 H11 L13 26 V44 H35 V26 L37 37 H45 L41 12 L33 8Z" fill="C"/><path d="M13 9 Q24 -1 35 9 Q36 15 31 15 Q24 8 17 15 Q12 15 13 9Z" fill="C" stroke="BG" stroke-width="2"/>${line("M24 14V43M13 25H35M13 34H35", 2.2, "BG")}`,
+  shorts: `<path d="M11 10 H37 L41 36 H27 L24 22 L21 36 H7Z" fill="C"/>`,
+  skirt: `<path d="M15 9 H33 L43 39 Q24 45 5 39Z" fill="C"/>${line("M18 14L14 38M24 14V40M30 14L34 38", 1.8, "BG")}`,
+  trousers: `<path d="M14 5 H34 L38 44 H27 L24 18 L21 44 H10Z" fill="C"/>`,
+  snow: `<path d="M14 17 H34 L39 45 H26 L24 28 L22 45 H9Z" fill="C"/><path d="M16 8 H32 V19 H16Z" fill="C"/>${line("M17 9L14 2M31 9L34 2", 3.4, "C")}${line("M14 19H34", 2, "BG")}`,
+  sandals: `${line("M6 36 H42", 6, "C")}${line("M12 33 Q20 16 28 33 M24 25 Q34 22 40 32", 4, "C")}`,
+  boots: `<path d="M14 5 H28 V27 Q42 29 43 41 H14Z" fill="C"/>${line("M15 37H42", 2.4, "BG")}`,
+  winterboots: `<path d="M14 8 H28 V27 Q42 29 43 41 H14Z" fill="C"/><rect x="11" y="4" width="20" height="8" rx="4" fill="C" stroke="BG" stroke-width="2"/>${line("M15 37H42M19 20h6M19 26h7", 2.2, "BG")}`,
+  umbrella: `<path d="M4 25 Q7 5 24 5 Q41 5 44 25 Q39 20 34 25 Q29 20 24 25 Q19 20 14 25 Q9 20 4 25Z" fill="C"/>${line("M24 24V38q0 5 5 5q4 0 4 -4", 3.6, "C")}`,
+  hood: `<path d="M24 3 C12 3 9 14 11 24 L4 44 H44 L37 24 C39 14 36 3 24 3Z" fill="C"/><circle cx="24" cy="18" r="8.5" fill="BG"/><circle cx="24" cy="18" r="6" fill="#fff"/>${line("M24 29V43", 2.2, "BG")}`,
+  scarf: `<path d="M9 10 Q24 20 39 10 L41 20 Q24 30 7 20Z M27 23 L36 21 L39 43 H28Z" fill="C"/>`,
+  beanie: `<path d="M8 29 Q6 11 24 11 Q42 11 40 29Z" fill="C"/><rect x="5" y="30" width="38" height="10" rx="5" fill="C"/><circle cx="24" cy="7" r="5" fill="C"/>`,
+  gloves: `<path d="M14 5 Q22 1 26 8 V21 L33 15 Q40 15 38 22 L30 34 V44 H13Z" fill="C"/>${line("M13 37H30", 2.2, "BG")}`,
+  goggles: `<rect x="5" y="15" width="38" height="20" rx="9" fill="C"/><path d="M11 20 H37 Q38 30 30 30 Q26 30 24 27 Q22 30 18 30 Q10 30 11 20Z" fill="BG"/>${line("M15 23l5 0", 2, "#fff")}`,
+  hat: `<path d="M3 34 Q24 24 45 34 Q44 41 24 39 Q4 41 3 34Z M12 30 Q13 11 24 11 Q35 11 36 30 Q24 25 12 30Z" fill="C"/>`,
+  shades: `<path d="M4 18 H22 Q22 34 13 34 Q4 34 4 18Z M26 18 H44 Q44 34 35 34 Q26 34 26 18Z" fill="C"/>${line("M21 20h6", 4, "C")}`,
+};
+// the clothes that matter first
+function symbolsOf(o, d) {
+  const list = [o.top];
+  if (d.umbrella) list.push("umbrella");
+  if (d.hood === "up" || d.fur || (o.hood && !d.umbrella)) list.push("hood");
+  if (o.legs === "snow") list.push("snow");
+  if (o.feet === "rain") list.push("boots");
+  if (o.feet === "winter") list.push("winterboots");
+  if (o.beanie && !list.includes("hood")) list.push("beanie");
+  if (o.gloves) list.push("gloves");
+  if (o.scarf) list.push("scarf");
+  if (o.legs === "snow") list.push("goggles");
+  if (o.sunhat) list.push("hat");
+  if (o.glasses) list.push("shades");
+  if (d.legs !== "snow") list.push(d.legs);
+  if (o.feet === "sandals") list.push("sandals");
+  return [...new Set(list)].slice(0, 4);
+}
+function symbolFigure(o, d, bg) {
+  const list = symbolsOf(o, d), top = apart(d.topC, bg), accent = apart(d.accent, bg);
+  const at = { 1: [[26, 26]], 2: [[0, 26], [52, 26]], 3: [[26, 0], [0, 52], [52, 52]], 4: [[0, 0], [52, 0], [0, 52], [52, 52]] }[list.length];
+  const color = (n) => (["umbrella", "scarf", "beanie", "gloves", "hat", "goggles"].includes(n) ? accent : n === o.top || n === "hood" ? top : "#fff");
+  return list.map((n, i) => `<g transform="translate(${at[i][0]} ${at[i][1]})">${SYMBOL[n].replaceAll('"C"', `"${color(n)}"`).replaceAll('"BG"', `"${bg}"`)}</g>`).join("");
 }
 
 
@@ -664,6 +800,9 @@ ha-card { display: block; position: relative; overflow: hidden; height: 100%; mi
 .bare .info { display: none; }
 .comic .w, .comic .tips, .comic .n { background: rgba(15, 12, 25, .72); font-style: italic; }
 .comic .t, .comic .tips b { font-weight: 800; }
+.wx { position: absolute; z-index: 1; top: 8px; right: 10px; width: 46px; height: 46px; }
+.pictogram .w, .pictogram .tips, .pictogram .n, .symbols .w, .symbols .tips, .symbols .n { background: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+.symbols .p svg { padding: 6% 0; box-sizing: border-box; }
 .msg { padding: 24px 16px; color: var(--secondary-text-color); }
 @container (max-width: 480px) {
   .in { grid-template-columns: 46% 1fr; padding: 8px; gap: 4px; }
@@ -682,6 +821,10 @@ ha-card { display: block; position: relative; overflow: hidden; height: 100%; mi
   .n { position: absolute; z-index: 4; top: 2px; right: 2px; max-width: calc(100% - 46px); font-size: 11px; padding: 1px 7px; }
   .tips { position: absolute; z-index: 4; left: 6px; right: 6px; bottom: 5px; padding: 2px 8px; border-radius: 10px; text-align: center; }
   .tips b { font-size: 12px; line-height: 1.5; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .wx { width: 26px; height: 26px; top: 6px; right: 7px; }
+  .wx.named { top: 23px; }
+  .symbols .p { top: 32px; }
+  .symbols .n { top: -27px; }
   .tips div, .tips .lg { display: none; }
   .tips .sm { display: block; }
 }
@@ -860,8 +1003,8 @@ class WhatToWearCard extends HTMLElement {
     const h = hours[0];
     const temps = hours.map((x) => x.temperature).filter((x) => x !== null);
     const sun = hass.states["sun.sun"];
-    const comic = config.style === "comic";
-    const s = (comic ? comicScene : scene)(sceneOf(state.state, demo ? demo.night === true : !!sun && sun.state === "below_horizon"), o);
+    const style = STYLES.includes(config.style) ? config.style : "friendly";
+    const s = { friendly: scene, comic: comicScene, pictogram: signScene, symbols: signScene }[style](sceneOf(state.state, demo ? demo.night === true : !!sun && sun.state === "below_horizon"), o);
     const condition = hass.formatEntityState ? hass.formatEntityState(state) : state.state;
     const wind = num(state.attributes.wind_speed);
     const details = [
@@ -877,9 +1020,15 @@ class WhatToWearCard extends HTMLElement {
     const weather = config.show_weather === false ? "<div></div>" : `<div class="w"><div class="t">${deg(h.temperature)}</div><div><div class="s">${esc(condition)}</div>${feels}<div class="s">${esc(details.join(" · "))}</div></div></div>`;
     const advice = config.show_tips === false ? "" : `<div class="tips">${tips}</div>`;
     const bare = config.show_weather === false && config.show_tips === false;
-    const dress = outfit(o, config), top = comic ? (dress.umbrella ? -44 : -18) : dress.umbrella ? -66 : -44;
+    const dress = outfit(o, config);
+    const [box, art] = {
+      friendly: () => [dress.umbrella ? "10 -66 200 358" : "10 -44 200 336", figure(dress)],
+      comic: () => [dress.umbrella ? "6 -44 190 400" : "6 -18 190 374", comicFigure(dress)],
+      pictogram: () => [dress.umbrella ? "14 -44 190 326" : "14 0 190 282", signFigure(dress, s.bg)],
+      symbols: () => ["-4 -2 108 104", symbolFigure(o, dress, s.bg)],
+    }[style]();
     this._paint(
-      `${s.back}<div class="in${comic ? " comic" : ""}${bare ? " bare" : ""}${advice ? " adv" : ""}"><div class="info">${weather}${advice}</div><div class="p"><svg viewBox="${comic ? 6 : 10} ${top} ${comic ? 190 : 200} ${(comic ? 356 : 292) - top}" preserveAspectRatio="xMidYMax meet" role="img" aria-label="${label}">${(comic ? comicFigure : figure)(dress)}</svg>${config.name ? `<div class="n">${esc(config.name)}</div>` : ""}</div></div>${s.front}`
+      `${s.back.replace("WXNAMED", config.name ? "named" : "")}<div class="in${style === "friendly" ? "" : ` ${style}`}${bare ? " bare" : ""}${advice ? " adv" : ""}"><div class="info">${weather}${advice}</div><div class="p"><svg viewBox="${box}" preserveAspectRatio="xMid${style === "symbols" ? "YMid" : "YMax"} meet" role="img" aria-label="${label}">${art}</svg>${config.name ? `<div class="n">${esc(config.name)}</div>` : ""}</div></div>${s.front}`
     );
   }
 }
@@ -938,4 +1087,4 @@ if (!customElements.get("what-to-wear-card")) {
   console.info(`what-to-wear-card ${VERSION}`);
 }
 
-export { AGES, STYLES, comicFigure, comicScene, BEARDS, COLORS, DEFAULTS, EYES, GENDERS, HAIR, HAIR_STYLES, HEADWEAR, SKIN, TEXT, VERSION, feelsLike, figure, hourOf, outfit, recommend, scene, sceneOf, toC, toKmh };
+export { AGES, SIGN, STYLES, SYMBOL, apart, signFigure, signScene, symbolFigure, symbolsOf, comicFigure, comicScene, BEARDS, COLORS, DEFAULTS, EYES, GENDERS, HAIR, HAIR_STYLES, HEADWEAR, SKIN, TEXT, VERSION, feelsLike, figure, hourOf, outfit, recommend, scene, sceneOf, toC, toKmh };

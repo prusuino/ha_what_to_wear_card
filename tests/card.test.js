@@ -130,6 +130,29 @@ test("everything can be drawn as a comic", () => {
   assert.equal(c.comicFigure(o), c.comicFigure(o)); // the same picture, so the card does not redraw
 });
 
+test("everything can be drawn as a pictogram", () => {
+  const bad = /undefined|NaN|null|<b>|Infinity|"C"|"BG"/;
+  for (const condition of ["sunny", "clear-night", "partlycloudy", "cloudy", "fog", "rainy", "pouring", "lightning-rainy", "snowy", "windy", "new"])
+    for (const t of [-15, -4, 4, 9, 15, 21, 33])
+      for (const wind_speed of [5, 50])
+        for (const night of [true, false]) {
+          const o = c.recommend([h(condition, t, { wind_speed })]), s = c.signScene(c.sceneOf(condition, night), o);
+          assert.match(s.bg, /^#[0-9A-Fa-f]{6}$/);
+          assert.ok(!bad.test(s.back));
+          for (const age of c.AGES) for (const hair of c.HAIR_STYLES) for (const headwear of c.HEADWEAR) {
+            const d = c.outfit(o, { age, hair, headwear, color: "white", accent_color: "none", bottom: "skirt" });
+            assert.ok(!bad.test(c.signFigure(d, s.bg) + c.symbolFigure(o, d, s.bg)), `${condition} ${t} ${hair}`);
+            const list = c.symbolsOf(o, d);
+            assert.ok(list.length >= 2 && list.length <= 4 && list.every((n) => c.SYMBOL[n]), list.join());
+          }
+        }
+});
+
+test("colours stand out from the sign", () => {
+  const rgb = (x) => [1, 3, 5].map((i) => parseInt(x.slice(i, i + 2), 16));
+  for (const bg of Object.values(c.SIGN)) for (const color of Object.values(c.COLORS)) assert.ok(Math.hypot(...rgb(c.apart(color, bg)).map((v, i) => v - rgb(bg)[i])) >= 90, `${bg} ${color}`);
+});
+
 test("choices", () => {
   const warm = c.recommend([h("cloudy", 24)]), cold = c.recommend([h("cloudy", -5)]);
   assert.equal(c.outfit(warm, { bottom: "skirt" }).legs, "skirt");
