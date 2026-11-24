@@ -27,7 +27,7 @@
  *   show_weather: true
  *   show_tips: true
  */
-const VERSION = "0.2.0";
+const VERSION = "0.2.1";
 
 const SKIN = { porcelain: "#FBE4D5", fair: "#F6D0B3", light: "#EEBD97", medium: "#DDA577", olive: "#C8935F", tan: "#AE7748", brown: "#8B5834", deep: "#67401F", ebony: "#482A1A" };
 const HAIR = { black: "#26201E", dark_brown: "#4A2E1F", brown: "#7A4B2A", light_brown: "#A5744A", blond: "#D9A94E", platinum: "#EBDDB8", red: "#B5522B", auburn: "#7E3022", grey: "#9AA0A6", white: "#E9ECEE", blue: "#3F78C9", pink: "#E07AA8" };
@@ -179,7 +179,8 @@ const line = (d, w, c) => `<path d="${d}" fill="none" stroke="${c}" stroke-width
 const dot = (x, y, r, c) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${c}"/>`;
 
 // Drawn as a child (big head); older people get a longer body and a smaller head.
-const BUILD = { child: [1, 1, 1], teen: [1.02, 1.14, 0.9], adult: [1.06, 1.28, 0.84], senior: [1.06, 1.23, 0.84] };
+// [width, height, head, neck]
+const BUILD = { child: [1, 1, 1, 5], teen: [1.02, 1.14, 0.9, 7], adult: [1.06, 1.28, 0.84, 8], senior: [1.06, 1.23, 0.84, 7] };
 
 // Hair behind the head and body.
 function hairBack(o) {
@@ -261,11 +262,11 @@ function face(o) {
 
 // One person. o: see `outfit`.
 function figure(o) {
-  const [sx, sy, sh] = BUILD[o.age] || BUILD.child;
+  const [sx, sy, sh, gap] = BUILD[o.age] || BUILD.child;
   const grown = o.age !== "child";
   const X = (x) => 100 + (x - 100) * sx, Y = (y) => 282 - (282 - y) * sy;
   const body = (...p) => `<g transform="translate(100 282) scale(${sx} ${sy}) translate(-100 -282)">${p.join("")}</g>`;
-  const neck = Y(118);
+  const neck = Y(118) - gap;
   const head = (...p) => `<g transform="translate(100 ${neck.toFixed(1)}) scale(${sh}) translate(-100 -118)">${p.join("")}</g>`;
   const lift = neck + (36 - 118) * sh - 36;
   const s = [`<ellipse cx="100" cy="282" rx="${52 * sx}" ry="7" fill="#000" opacity=".14"/>`, head(hairBack(o))];
@@ -323,7 +324,7 @@ function figure(o) {
 
   // neck and head
   const nw = o.shape === "male" && grown ? 11 : 9;
-  if (!o.scarf) s.push(body(`<rect x="${100 - nw}" y="102" width="${nw * 2}" height="21" rx="5" fill="${skinD}"/>`));
+  s.push(`<rect x="${100 - nw}" y="${(neck - 10).toFixed(1)}" width="${nw * 2}" height="${(Y(127) - neck + 10).toFixed(1)}" rx="7" fill="${skinD}"/>`);
   const h = [];
   if (o.hood === "up") h.push(`<path d="M100 22 C62 22 54 60 56 88 C58 116 78 126 100 126 C122 126 142 116 144 88 C146 60 138 22 100 22Z" fill="${o.topC}"/><path d="M100 22 C62 22 54 60 56 88" stroke="${lt}" stroke-width="3" fill="none"/>`);
   if (o.cover === "headscarf") h.push(`<path d="M100 26 C64 26 54 58 56 88 C56 112 62 130 74 138 L126 138 C138 130 144 112 144 88 C146 58 136 26 100 26Z" fill="${o.accent}"/>`);
@@ -417,10 +418,10 @@ function scene({ kind, night }, o) {
 
 const STYLE = `
 :host { display: block; height: 100%; }
-ha-card { display: block; position: relative; overflow: hidden; height: 100%; min-height: 220px; container-type: inline-size; isolation: isolate; }
+ha-card { display: block; position: relative; overflow: hidden; height: 100%; min-height: 130px; container-type: inline-size; isolation: isolate; }
 .back, .front { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
 .front { z-index: 3; pointer-events: none; }
-.in { position: relative; display: grid; grid-template-rows: minmax(0, 1fr); grid-template-columns: minmax(150px, 38%) 1fr; height: 100%; min-height: 220px; box-sizing: border-box; padding: 14px; gap: 8px; cursor: pointer; }
+.in { position: relative; display: grid; grid-template-rows: minmax(0, 1fr); grid-template-columns: minmax(150px, 38%) 1fr; height: 100%; min-height: 130px; box-sizing: border-box; padding: 10px; gap: 8px; cursor: pointer; }
 .info { display: flex; flex-direction: column; justify-content: space-between; gap: 10px; min-width: 0; position: relative; z-index: 4; }
 .w, .tips { background: rgba(18, 28, 40, .5); color: #fff; border-radius: 14px; padding: 10px 12px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
 .w { align-self: flex-start; max-width: 100%; box-sizing: border-box; }
@@ -435,19 +436,23 @@ ha-card { display: block; position: relative; overflow: hidden; height: 100%; mi
 .bare .info { display: none; }
 .msg { padding: 24px 16px; color: var(--secondary-text-color); }
 @container (max-width: 480px) {
-  .in { grid-template-columns: 46% 1fr; padding: 10px; }
-  .t { font-size: 30px; } .s, .tips { font-size: 13px; } .tips b { font-size: 15px; }
+  .in { grid-template-columns: 46% 1fr; padding: 8px; gap: 4px; }
+  .info { gap: 4px; }
+  .w, .tips { padding: 5px 9px; border-radius: 11px; }
+  .t { font-size: 24px; } .s, .tips { font-size: 12px; line-height: 1.25; } .tips b { font-size: 13px; }
 }
 @container (max-width: 300px) {
-  .in { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr) auto; padding: 8px; gap: 4px; }
-  .info { display: contents; }
-  .w { position: relative; z-index: 4; grid-row: 1; display: flex; align-items: center; gap: 8px; padding: 5px 10px; }
-  .w .s:nth-child(n + 2) { display: none; }
-  .t { font-size: 22px; } .s { font-size: 12px; }
-  .p { grid-row: 2; }
-  .tips { position: relative; z-index: 4; grid-row: 3; padding: 5px 10px; font-size: 12px; }
-  .tips b { font-size: 13px; }
-  .tips div:nth-child(n + 3) { display: none; }
+  .in { display: block; padding: 0; }
+  .info { display: block; position: static; }
+  .w { position: absolute; z-index: 4; top: 6px; left: 6px; padding: 2px 8px; border-radius: 10px; }
+  .w .s { display: none; }
+  .t { font-size: 18px; }
+  .p { position: absolute; inset: 4px 4px 4px 4px; }
+  .in.adv .p { bottom: 25px; }
+  .n { position: absolute; z-index: 4; top: 2px; right: 2px; max-width: 55%; font-size: 12px; }
+  .tips { position: absolute; z-index: 4; left: 6px; right: 6px; bottom: 5px; padding: 2px 8px; border-radius: 10px; text-align: center; }
+  .tips b { font-size: 12px; line-height: 1.5; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tips div { display: none; }
 }
 @container (min-width: 760px) {
   .t { font-size: 48px; } .s, .tips { font-size: 17px; } .tips b { font-size: 20px; } .n { font-size: 16px; }
@@ -522,11 +527,11 @@ class WhatToWearCard extends HTMLElement {
   }
 
   getCardSize() {
-    return 5;
+    return 3;
   }
 
   getGridOptions() {
-    return { columns: 6, rows: 5, min_columns: 3, min_rows: 4 };
+    return { columns: 4, rows: 3, min_columns: 3, min_rows: 2 };
   }
 
   _unsubscribe() {
@@ -627,8 +632,9 @@ class WhatToWearCard extends HTMLElement {
     const weather = config.show_weather === false ? "<div></div>" : `<div class="w"><div class="t">${deg(h.temperature)}</div><div><div class="s">${esc(condition)}</div>${feels}<div class="s">${esc(details.join(" · "))}</div></div></div>`;
     const advice = config.show_tips === false ? "" : `<div class="tips">${tips}</div>`;
     const bare = config.show_weather === false && config.show_tips === false;
+    const dress = outfit(o, config), top = dress.umbrella ? -66 : -44;
     this._paint(
-      `${s.back}<div class="in${bare ? " bare" : ""}"><div class="info">${weather}${advice}</div><div class="p"><svg viewBox="10 -58 200 350" preserveAspectRatio="xMidYMax meet" role="img" aria-label="${label}">${figure(outfit(o, config))}</svg>${config.name ? `<div class="n">${esc(config.name)}</div>` : ""}</div></div>${s.front}`
+      `${s.back}<div class="in${bare ? " bare" : ""}${advice ? " adv" : ""}"><div class="info">${weather}${advice}</div><div class="p"><svg viewBox="10 ${top} 200 ${292 - top}" preserveAspectRatio="xMidYMax meet" role="img" aria-label="${label}">${figure(dress)}</svg>${config.name ? `<div class="n">${esc(config.name)}</div>` : ""}</div></div>${s.front}`
     );
   }
 }
