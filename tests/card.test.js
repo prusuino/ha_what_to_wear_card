@@ -148,6 +148,20 @@ test("everything can be drawn as a pictogram", () => {
         }
 });
 
+test("black and white has two colours only", () => {
+  for (const dark of [true, false])
+    for (const condition of ["sunny", "partlycloudy", "rainy", "lightning-rainy", "snowy", "windy", "fog", "clear-night"])
+      for (const t of [-15, -4, 4, 9, 15, 21, 33])
+        for (const wind_speed of [5, 50]) {
+          const o = c.recommend([h(condition, t, { wind_speed })]), s = c.monoScene(c.sceneOf(condition, false), o, dark);
+          for (const age of c.AGES) for (const hair of c.HAIR_STYLES) for (const headwear of c.HEADWEAR) {
+            const svg = s.back + c.signFigure(c.outfit(o, { age, hair, headwear, glasses: true, bottom: "skirt" }), s.bg, s.ink);
+            assert.ok(!/undefined|NaN|null|false/.test(svg));
+            assert.deepEqual([...new Set(svg.match(/#[0-9a-fA-F]{3,6}/g))].sort(), [s.bg, s.ink].sort());
+          }
+        }
+});
+
 test("colours stand out from the sign", () => {
   const rgb = (x) => [1, 3, 5].map((i) => parseInt(x.slice(i, i + 2), 16));
   for (const bg of Object.values(c.SIGN)) for (const color of Object.values(c.COLORS)) assert.ok(Math.hypot(...rgb(c.apart(color, bg)).map((v, i) => v - rgb(bg)[i])) >= 90, `${bg} ${color}`);
