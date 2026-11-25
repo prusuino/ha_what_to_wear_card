@@ -25,7 +25,7 @@ It works with **any weather entity**, anywhere in the world.
 - **You choose the person**: four ages from child to senior, three genders, nine skin tones, twelve hairstyles, twelve hair colours, beards, glasses, freckles, earrings, cap, headscarf or turban, trousers or skirt, and the colours of the clothes.
 - **One card per person**: put several side by side for a family. Someone who feels the cold gets a warmer outfit and their own advice.
 - **A moving scene**: sun, stars, clouds, fog, rain, thunderstorm, snow and wind; still for anyone who turned animations off.
-- **Small or large**: from a third of a column to a wall display, in light and dark themes.
+- **Small or large**: from a quarter of a section to a wall display, in light and dark themes.
 - **Nothing is loaded from elsewhere**: the drawings are part of the card and nothing leaves your Home Assistant.
 - **Set up in the editor**: no YAML needed; English, German, French and Italian, °C and °F.
 
@@ -115,6 +115,18 @@ demo:
 - The card uses the **hourly** forecast when the entity has one, otherwise the twice-daily or daily one, which says less about the next hours.
 - It is a drawing, not a safety advice: in severe weather, follow the official warnings.
 
+## Disclaimer
+
+Provided **as-is, without any warranty**. The card gives a hint from a weather forecast, and forecasts can be wrong. It is not a safety advice: in severe weather, follow the official warnings.
+
 ## License
 
-MIT. The drawings were made for this card and are covered by the same license.
+MIT – see [LICENSE](LICENSE). The drawings were made for this card and are covered by the same license.
+
+## Related projects
+
+More of my Home Assistant projects are on [smarthome-swiss.ch](https://smarthome-swiss.ch) and in [my GitHub profile](https://github.com/prusuino?tab=repositories).
+
+## Support
+
+<a href="https://www.buymeacoffee.com/prusuino"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me a Coffee" height="41"></a>
