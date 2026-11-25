@@ -451,7 +451,7 @@ const COMIC_BUILD = { child: [0.96, 0.72, 1.22, 13], teen: [0.9, 0.86, 1.02, 6],
 
 function comicHairBack(o) {
   const c = shade(o.hair, 0.86), covered = o.hat || o.fur || o.hood === "up";
-  if (o.cover) return "";
+  if (o.cover || ((o.hood === "up" || o.fur) && (o.cut === "long" || o.cut === "ponytail"))) return "";
   switch (o.cut) {
     case "long":
       return inked(o.wind ? "M82 34 C66 52 44 64 30 92 C48 96 66 108 84 120 L118 112 C126 84 124 56 120 34Z" : "M80 34 C70 62 68 96 74 126 Q88 120 92 108 L110 108 Q116 124 130 122 C136 92 130 58 121 34Z", o.hair, "M104 20 L150 20 L150 130 L108 130Z");
@@ -723,8 +723,8 @@ function signFigure(o, bg, ink) {
   // head and hair
   const covered = o.hat || o.hood === "up" || o.fur || o.cover;
   if (!covered && (o.cut === "afro" || o.cut === "curly")) s.push(`<circle cx="100" cy="48" r="${o.cut === "afro" ? 39 : 34}" fill="${hair}" stroke="${bg}" stroke-width="4"/>`);
-  if (!o.cover && (o.cut === "pigtails" || o.cut === "braids")) s.push(`<path d="M74 50 Q52 44 ${o.cut === "braids" ? "50 112 Q62 108 74 64" : "48 80 Q66 78 76 64"}Z M126 50 Q148 44 ${o.cut === "braids" ? "150 112 Q138 108 126 64" : "152 80 Q134 78 124 64"}Z" fill="${hair}" stroke="${bg}" stroke-width="3"/>`);
-  if (!o.cover && (o.cut === "long" || o.cut === "bob")) {
+  if (!o.cover && !(o.hood === "up" || o.fur) && (o.cut === "pigtails" || o.cut === "braids")) s.push(`<path d="M74 50 Q52 44 ${o.cut === "braids" ? "50 112 Q62 108 74 64" : "48 80 Q66 78 76 64"}Z M126 50 Q148 44 ${o.cut === "braids" ? "150 112 Q138 108 126 64" : "152 80 Q134 78 124 64"}Z" fill="${hair}" stroke="${bg}" stroke-width="3"/>`);
+  if (!o.cover && !(o.hood === "up" || o.fur) && (o.cut === "long" || o.cut === "bob")) {
     const y = o.cut === "long" ? 108 : 88;
     s.push(`<path d="M66 ${y} Q58 27 100 25 Q142 27 134 ${y} Q124 ${y + 5} 118 ${y} L118 60 H82 V${y} Q76 ${y + 5} 66 ${y}Z" fill="${hair}" stroke="${bg}" stroke-width="3" stroke-linejoin="round"/>`);
   }
@@ -734,6 +734,11 @@ function signFigure(o, bg, ink) {
   if (o.cover === "headscarf") s.push(`<path d="M100 22 C64 22 62 58 66 80 Q80 104 100 104 Q120 104 134 80 C138 58 136 22 100 22Z" fill="${b}" stroke="${bg}" stroke-width="4"/>`);
   const small = o.hood === "up" || o.fur || o.cover === "headscarf";
   s.push(`<circle cx="100" cy="${small ? 58 : 56}" r="${small ? 20 : 26}" fill="${W}"${small ? edge : ` stroke="${bg}" stroke-width="4"`}/>`);
+  if (!covered) {
+    const crown = { short: "M71 54 Q66 22 100 22 Q134 22 129 54 Q124 40 112 37 Q100 44 84 38 Q76 42 71 54Z", buzz: "M74 47 Q76 27 100 27 Q124 27 126 47 Q114 36 100 36 Q86 36 74 47Z", receding: "M72 60 Q66 40 80 34 Q80 46 78 62Z M128 60 Q134 40 120 34 Q120 46 122 62Z", ponytail: "M72 52 Q70 24 100 24 Q130 24 128 52 Q116 36 100 36 Q84 36 72 52Z" };
+    crown.bun = crown.pigtails = crown.braids = crown.ponytail;
+    if (crown[o.cut]) s.push(`<path d="${crown[o.cut]}" fill="${hair}"${ink ? ` stroke="${bg}" stroke-width="3.4" stroke-linejoin="round"` : ""}/>`);
+  }
   if (o.cover === "turban") s.push(`<path d="M68 56 Q62 18 100 18 Q138 18 132 56 Q100 32 68 56Z" fill="${b}"${edge}/>${line("M72 52 Q100 22 124 28 M128 52 Q100 24 78 30", 3.4, bg)}`);
   if (o.hat === "beanie") s.push(`<path d="M70 48 Q68 18 100 18 Q132 18 130 48Z" fill="${b}"/><rect x="66" y="42" width="68" height="14" rx="7" fill="${W}" stroke="${bg}" stroke-width="3"/><circle cx="100" cy="15" r="9" fill="${W}" stroke="${bg}" stroke-width="3"/>`);
   if (o.hat === "sun") s.push(`<path d="M40 44 Q100 24 160 44 Q160 54 148 53 Q100 40 52 53 Q40 54 40 44Z" fill="${b}" stroke="${bg}" stroke-width="3"/><path d="M72 38 Q74 12 100 12 Q126 12 128 38 Q100 30 72 38Z" fill="${b}"/>`);
@@ -780,15 +785,15 @@ const SYMBOL = {
 function symbolsOf(o, d) {
   const list = [o.top];
   if (d.umbrella) list.push("umbrella");
-  if (d.hood === "up" || d.fur || (o.hood && !d.umbrella)) list.push("hood");
+  if (d.hood === "up" || d.fur || (o.hood && !d.umbrella && !d.cover)) list.push("hood");
   if (o.legs === "snow") list.push("snow");
   if (o.feet === "rain") list.push("boots");
   if (o.feet === "winter") list.push("winterboots");
-  if (o.beanie && !list.includes("hood")) list.push("beanie");
+  if (d.hat === "beanie") list.push("beanie");
   if (o.gloves) list.push("gloves");
   if (o.scarf) list.push("scarf");
-  if (o.legs === "snow") list.push("goggles");
-  if (o.sunhat) list.push("hat");
+  if (d.goggles) list.push("goggles");
+  if (d.hat === "sun") list.push("hat");
   if (o.glasses) list.push("shades");
   if (d.legs !== "snow") list.push(d.legs);
   if (o.feet === "sandals") list.push("sandals");
@@ -855,6 +860,11 @@ ha-card { display: block; position: relative; overflow: hidden; height: 100%; mi
   .pictogram.titled .n { top: -18px; }
   .tips div, .tips .lg { display: none; }
   .tips .sm { display: block; }
+}
+@container (max-width: 125px) {
+  .wx.pictogram { top: 4px; right: 5px; left: auto; width: 24px; height: 24px; }
+  .wx.pictogram.named { display: none; }
+  .pictogram .p { top: 26px; }
 }
 @container (min-width: 760px) {
   .t { font-size: 48px; } .s, .tips { font-size: 17px; } .tips b { font-size: 20px; } .n { font-size: 16px; }
