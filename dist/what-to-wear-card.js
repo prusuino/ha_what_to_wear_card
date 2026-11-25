@@ -686,16 +686,17 @@ function signFigure(o, bg) {
   const coat = o.top === "rain", parka = o.top === "winter", low = coat ? 214 : parka ? 196 : 178;
   if (o.legs === "shorts") s.push(line("M86 180 V262 M114 180 V262", 22, W), line("M86 180 V206 M114 180 V206", 28, b));
   else s.push(line("M86 180 V262 M114 180 V262", o.legs === "snow" ? 28 : 24, o.legs === "snow" ? b : W));
+  if (o.legs === "snow") s.push(line("M100 204 V262", 5, bg));
   if (o.legs === "skirt") s.push(`<path d="M76 168 H124 L142 226 Q100 238 58 226Z" fill="${W}" stroke="${bg}" stroke-width="5" stroke-linejoin="round"/>`);
   if (o.feet === "rain" || o.feet === "winter") s.push(line("M86 238 V264 M114 238 V264", 28, b), line("M78 270 H92 M108 270 H122", 18, b), o.feet === "winter" ? line("M74 230 H98 M102 230 H126", 7, W) : "");
   else s.push(o.feet === "sandals" ? line("M74 272 H94 M106 272 H126", 9, b) : line("M78 268 H92 M108 268 H122", 16, b));
-  const right = o.umbrella ? "M128 104 L150 136 L160 112" : o.wave ? "M128 104 L154 112 L164 76" : "M130 106 L146 170", sleeves = o.top !== "tshirt";
-  for (const [d, x, y] of [["M70 106 L54 170", 54, 172], [right, ...(o.umbrella ? [160, 110] : o.wave ? [164, 74] : [146, 172])]]) {
+  const right = o.umbrella ? "M128 104 L150 136 L160 112" : "M130 106 L146 170", sleeves = o.top !== "tshirt";
+  for (const [d, x, y] of [["M70 106 L54 170", 54, 172], [right, ...(o.umbrella ? [160, 110] : [146, 172])]]) {
     s.push(line(d, 21, sleeves ? a : W));
     if (o.gloves) s.push(`<circle cx="${x}" cy="${y}" r="13" fill="${b}" stroke="${bg}" stroke-width="4"/>`);
     else if (sleeves) s.push(`<circle cx="${x}" cy="${y}" r="10.5" fill="${W}"/>`);
   }
-  if (!sleeves) s.push(line("M71 106 L65 126", 25, a), line(o.wave ? "M129 106 L145 110" : o.umbrella ? "M129 106 L139 120" : "M129 106 L135 126", 25, a));
+  if (!sleeves) s.push(line("M71 106 L65 126", 25, a), line(o.umbrella ? "M129 106 L139 120" : "M129 106 L135 126", 25, a));
   const fl = coat ? 12 : 2;
   s.push(`<path d="M72 92 Q100 84 128 92 Q136 96 134 112 L${130 + fl} ${low - 6} Q${130 + fl} ${low} ${124 + fl} ${low} H${76 - fl} Q${70 - fl} ${low} ${70 - fl} ${low - 6} L66 112 Q64 96 72 92Z" fill="${a}" stroke="${bg}" stroke-width="4" stroke-linejoin="round"/>`);
   if (parka) s.push(line("M70 122 H130 M69 148 H131 M69 173 H131 M100 92 V192", 4, bg));
@@ -725,7 +726,7 @@ function signFigure(o, bg) {
   else if (o.glasses) s.push(`<g fill="none" stroke="${bg}" stroke-width="3.4"><circle cx="90" cy="60" r="7.5"/><circle cx="110" cy="60" r="7.5"/><path d="M97.5 59h5"/></g>`);
   if (o.veil) s.push(`<path d="M${small ? 81 : 75} 64 Q100 70 ${small ? 119 : 125} 64 Q118 82 100 ${small ? 79 : 83} Q82 82 ${small ? 81 : 75} 64Z" fill="${b}"/>`);
   if (o.scarf) s.push(line("M78 92 Q100 102 122 92", 15, b), o.wind ? line("M80 94 Q52 82 30 98", 14, b) : line("M114 98 V136", 14, b));
-  if (o.age === "senior" && !o.umbrella && !o.wave) s.push(line("M150 172 V270 M150 172 Q150 160 160 160", 6, W));
+  if (o.age === "senior" && !o.umbrella) s.push(line("M150 172 V270 M150 172 Q150 160 160 160", 6, W));
   if (o.umbrella) s.push(line("M160 130 V6", 5, W), `<path d="M74 26 Q84 -42 160 -42 Q236 -42 246 26 Q232 14 217 26 Q203 12 189 26 Q174 12 160 26 Q146 12 132 26 Q117 12 103 26 Q88 14 74 26Z" fill="${b}" stroke="${bg}" stroke-width="3" stroke-linejoin="round" transform="translate(48 0) scale(.7 .9)"/>`);
   return `<g transform="translate(100 276) scale(${k}) translate(-100 -276)">${s.join("")}</g>`;
 }
@@ -823,8 +824,12 @@ ha-card { display: block; position: relative; overflow: hidden; height: 100%; mi
   .tips b { font-size: 12px; line-height: 1.5; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .wx { width: 26px; height: 26px; top: 6px; right: 7px; }
   .wx.named { top: 23px; }
+  .wx.pictogram { top: 33px; right: auto; left: 9px; }
+  .wx.pictogram.alone { top: 6px; }
+  .pictogram.titled .p { top: 22px; }
   .symbols .p { top: 32px; }
   .symbols .n { top: -27px; }
+  .pictogram.titled .n { top: -18px; }
   .tips div, .tips .lg { display: none; }
   .tips .sm { display: block; }
 }
@@ -1028,7 +1033,7 @@ class WhatToWearCard extends HTMLElement {
       symbols: () => ["-4 -2 108 104", symbolFigure(o, dress, s.bg)],
     }[style]();
     this._paint(
-      `${s.back.replace("WXNAMED", config.name ? "named" : "")}<div class="in${style === "friendly" ? "" : ` ${style}`}${bare ? " bare" : ""}${advice ? " adv" : ""}"><div class="info">${weather}${advice}</div><div class="p"><svg viewBox="${box}" preserveAspectRatio="xMid${style === "symbols" ? "YMid" : "YMax"} meet" role="img" aria-label="${label}">${art}</svg>${config.name ? `<div class="n">${esc(config.name)}</div>` : ""}</div></div>${s.front}`
+      `${s.back.replace("WXNAMED", `${config.name ? "named " : ""}${style}${weather ? "" : " alone"}`)}<div class="in${style === "friendly" ? "" : ` ${style}`}${bare ? " bare" : ""}${config.name ? " titled" : ""}${advice ? " adv" : ""}"><div class="info">${weather}${advice}</div><div class="p"><svg viewBox="${box}" preserveAspectRatio="xMid${style === "symbols" ? "YMid" : "YMax"} meet" role="img" aria-label="${label}">${art}</svg>${config.name ? `<div class="n">${esc(config.name)}</div>` : ""}</div></div>${s.front}`
     );
   }
 }
