@@ -125,7 +125,7 @@ MIT – see [LICENSE](LICENSE). The drawings were made for this card and are cov
 
 ## Related projects
 
-More of my Home Assistant projects are on [smarthome-swiss.ch](https://smarthome-swiss.ch) and in [my GitHub profile](https://github.com/prusuino?tab=repositories).
+More of my Home Assistant projects are in [my GitHub profile](https://github.com/prusuino?tab=repositories).
 
 ## Support
 
