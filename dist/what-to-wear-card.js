@@ -863,8 +863,10 @@ ha-card { display: block; position: relative; overflow: hidden; height: 100%; mi
 }
 @container (max-width: 125px) {
   .wx.pictogram { top: 4px; right: 5px; left: auto; width: 24px; height: 24px; }
-  .wx.pictogram.named { display: none; }
+  .wx.pictogram.named { top: 25px; right: auto; left: 7px; width: 20px; height: 20px; }
   .pictogram .p { top: 26px; }
+  .pictogram.titled .p { top: 46px; }
+  .pictogram.titled .n { top: -42px; }
 }
 @container (min-width: 760px) {
   .t { font-size: 48px; } .s, .tips { font-size: 17px; } .tips b { font-size: 20px; } .n { font-size: 16px; }
