@@ -39,7 +39,9 @@ It works with **any weather entity**, anywhere in the world.
 
 The card needs Home Assistant 2025.4 or newer.
 
-**Marketplace (Home Assistant 2026.11 or newer)**: Settings → Marketplace → ⋮ → *Add from link* → `https://github.com/prusuino/ha_what_to_wear_card`, then download it. Home Assistant 2026.10 or older: HACS → ⋮ → *Custom repositories* → the same link, type *Dashboard*.
+**Marketplace (Home Assistant 2026.11 or newer)**: Settings → Marketplace, search for **What to Wear** and download it. Home Assistant 2026.10 or older: search for it in HACS the same way.
+
+If it does not show up yet, add it by link instead: Marketplace → ⋮ → *Add from link* → `https://github.com/prusuino/ha_what_to_wear_card` (HACS: ⋮ → *Custom repositories*, type *Dashboard*).
 
 **By hand**: copy `what-to-wear-card.js` from the [latest release](https://github.com/prusuino/ha_what_to_wear_card/releases/latest) to `config/www/` and add `/local/what-to-wear-card.js` as a JavaScript module under Settings → Dashboards → ⋮ → Resources.
 
