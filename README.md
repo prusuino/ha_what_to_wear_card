@@ -39,13 +39,21 @@ It works with **any weather entity**, anywhere in the world.
 
 The card needs Home Assistant 2025.4 or newer.
 
-**Marketplace (Home Assistant 2026.11 or newer)**: Settings → Marketplace, search for **What to Wear** and download it. Home Assistant 2026.10 or older: search for it in HACS the same way.
+### Home Assistant Marketplace (recommended)
 
-If it does not show up yet, add it by link instead: Marketplace → ⋮ → *Add from link* → `https://github.com/prusuino/ha_what_to_wear_card` (HACS: ⋮ → *Custom repositories*, type *Dashboard*).
+1. Open **Settings → Marketplace** (Home Assistant 2026.11 or newer; on older versions open **HACS**), search for **"What to Wear"** and download it — or use the button, which opens the card directly in your Marketplace:
 
-**By hand**: copy `what-to-wear-card.js` from the [latest release](https://github.com/prusuino/ha_what_to_wear_card/releases/latest) to `config/www/` and add `/local/what-to-wear-card.js` as a JavaScript module under Settings → Dashboards → ⋮ → Resources.
+   [![Open in Marketplace](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=prusuino&repository=ha_what_to_wear_card&category=plugin)
 
-No restart is needed. Reload the browser, then add the card: *Edit dashboard → Add card → What to Wear*.
+2. Reload the browser.
+
+The card is listed in the Marketplace default catalog (formerly the HACS default store), so no custom repository is needed.
+
+### Manual
+
+Copy `what-to-wear-card.js` from the [latest release](https://github.com/prusuino/ha_what_to_wear_card/releases/latest) to `config/www/` and add `/local/what-to-wear-card.js` as a JavaScript module under Settings → Dashboards → ⋮ → Resources, then reload the browser.
+
+No restart is needed. Then add the card: *Edit dashboard → Add card → What to Wear*.
 
 ## Options
 
