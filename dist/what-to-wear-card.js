@@ -34,7 +34,7 @@
  *     later: [-1, 0, 1]        # temperatures of the coming hours
  *     later_condition: cloudy
  */
-const VERSION = "1.0.0";
+const VERSION = "1.1.0";
 
 const SKIN = { porcelain: "#FBE4D5", fair: "#F6D0B3", light: "#EEBD97", medium: "#DDA577", olive: "#C8935F", tan: "#AE7748", brown: "#8B5834", deep: "#67401F", ebony: "#482A1A", yellow: "#FFC83D" };
 const HAIR = { black: "#26201E", dark_brown: "#4A2E1F", brown: "#7A4B2A", light_brown: "#A5744A", blond: "#D9A94E", platinum: "#EBDDB8", red: "#B5522B", auburn: "#7E3022", grey: "#9AA0A6", white: "#E9ECEE", blue: "#3F78C9", pink: "#E07AA8" };
