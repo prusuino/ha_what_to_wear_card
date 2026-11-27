@@ -130,6 +130,30 @@ test("everything can be drawn as a comic", () => {
   assert.equal(c.comicFigure(o), c.comicFigure(o)); // the same picture, so the card does not redraw
 });
 
+test("everything can be drawn as an emoji", () => {
+  const bad = /undefined|NaN|null|<b>|Infinity/;
+  const faces = new Set();
+  for (const condition of ["sunny", "partlycloudy", "cloudy", "rainy", "pouring", "lightning-rainy", "snowy", "windy", "new"])
+    for (const t of [-15, -4, 4, 9, 15, 21, 33])
+      for (const wind_speed of [5, 50]) {
+        const o = c.recommend([h(condition, t, { wind_speed })]);
+        for (const age of [...c.AGES, "x"])
+          for (const gender of c.GENDERS)
+            for (const hair of [...c.HAIR_STYLES, "x"])
+              for (const headwear of c.HEADWEAR) {
+                const d = { ...c.outfit(o, { age, gender, hair, headwear, skin: "<b>", color: "none", beard: "full", glasses: true, earrings: true, freckles: true }), emoji: true };
+                const svg = c.figure(d);
+                assert.ok(!bad.test(svg), `${condition} ${t} ${age} ${hair}`);
+                assert.equal((svg.match(/<g[ >]/g) || []).length, (svg.match(/<\/g>/g) || []).length);
+                faces.add(c.emojiFace(d));
+              }
+      }
+  assert.ok(faces.size > 20); // the face changes with the weather
+  const d = { ...c.outfit(c.recommend([h("cloudy", 18)]), { skin: "yellow" }), emoji: true };
+  assert.equal(c.figure(d), c.figure(d)); // the same picture, so the card does not redraw
+  assert.ok(c.STYLES.includes("emoji") && c.SKIN.yellow);
+});
+
 test("everything can be drawn as a pictogram", () => {
   const bad = /undefined|NaN|null|<b>|Infinity|"C"|"BG"/;
   for (const condition of ["sunny", "clear-night", "partlycloudy", "cloudy", "fog", "rainy", "pouring", "lightning-rainy", "snowy", "windy", "new"])

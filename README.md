@@ -21,8 +21,8 @@ It works with **any weather entity**, anywhere in the world.
 - **Dressed for the next hours, not for this minute**: the coldest of the next three hours decides, by what the air feels like, with wind chill and humid heat.
 - **Rain, snow, wind and sun**: umbrella and rubber boots, a hood instead of the umbrella when it is windy or thundering, snow trousers and goggles, scarf, gloves, sun hat and sunglasses.
 - **Advice in words**: "Milder later, up to 16°", "Rain from about 14:00", "Watch out for ice".
-- **Five styles**: friendly, a street comic with thick outlines and hard shadows, a pictogram as on a sign, the same in black and white (follows the light or dark theme), or only the clothes as symbols.
-- **You choose the person**: four ages from child to senior, three genders, nine skin tones, twelve hairstyles, twelve hair colours, beards, glasses, freckles, earrings, cap, headscarf or turban, trousers or skirt, and the colours of the clothes.
+- **Six styles**: friendly, a street comic with thick outlines and hard shadows, a pictogram as on a sign, the same in black and white (follows the light or dark theme), only the clothes as symbols, or an emoji whose face shows how the weather feels.
+- **You choose the person**: four ages from child to senior, three genders, nine skin tones (and emoji yellow), twelve hairstyles, twelve hair colours, beards, glasses, freckles, earrings, cap, headscarf or turban, trousers or skirt, and the colours of the clothes.
 - **One card per person**: put several side by side for a family. Someone who feels the cold gets a warmer outfit and their own advice.
 - **A moving scene**: sun, stars, clouds, fog, rain, thunderstorm, snow and wind; still for anyone who turned animations off.
 - **Small or large**: from a quarter of a section to a wall display, in light and dark themes.
@@ -73,7 +73,7 @@ color: pink
 | Option | Default | Values |
 |---|---|---|
 | `entity` | | a weather entity (required) |
-| `style` | `friendly` | `friendly`, `comic`, `pictogram` (a person as on a sign), `mono` (black and white, follows the light or dark theme), `symbols` (only the clothes; the person does not show) |
+| `style` | `friendly` | `friendly`, `comic`, `pictogram` (a person as on a sign), `mono` (black and white, follows the light or dark theme), `symbols` (only the clothes; the person does not show), `emoji` (a round emoji head that grins in the sun and shivers in the frost; yellow unless you choose a skin) |
 | `name` | | shown on the card |
 | `gender` | `neutral` | `female`, `male`, `neutral` |
 | `age` | `adult` | `child`, `teen`, `adult`, `senior` |

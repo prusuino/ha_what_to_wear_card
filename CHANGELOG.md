@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0 — unreleased
+
+- **New style: emoji.** A big round emoji head on the friendly body: it grins in the sun, frowns in the rain and shivers in the frost. Classic emoji yellow unless you choose a skin; hair, beards, glasses and headwear work as in the other styles.
+
 ## 1.0.0 — 2026-11-25
 
 First release.
